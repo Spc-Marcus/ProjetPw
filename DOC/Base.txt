@@ -1,0 +1,52 @@
+CREATE TABLE "Admin" (
+	"admin_id"	INTEGER,
+	"nom"	VARCHAR(255) NOT NULL,
+	"prenom"	VARCHAR(255) NOT NULL,
+	"login"	VARCHAR(255) NOT NULL,
+	"mot_de_passe"	VARCHAR(255) NOT NULL,
+	PRIMARY KEY("admin_id" AUTOINCREMENT)
+);
+CREATE TABLE "Festival" (
+	"festival_id"	INTEGER,
+	"nom"	VARCHAR(255) NOT NULL,
+	"dates"	VARCHAR(255) NOT NULL,
+	"localisation"	VARCHAR(255) NOT NULL,
+	"photo"	VARCHAR(255) NOT NULL,
+	PRIMARY KEY("festival_id" AUTOINCREMENT)
+);CREATE TABLE "Covoit" (
+	"covoit_id"	INTEGER,
+	"accepter"	BOOLEAN NOT NULL,
+	"trajet_id"	INTEGER NOT NULL,
+	"user_id"	INT NOT NULL,
+	"aller"	BOOLEAN NOT NULL,
+	"retour"	BOOLEAN NOT NULL,
+	FOREIGN KEY("user_id") REFERENCES "User"("user_id"),
+	FOREIGN KEY("trajet_id") REFERENCES "Trajet"("trajet_id"),
+	PRIMARY KEY("covoit_id" AUTOINCREMENT)
+);CREATE TABLE "Festivalier" (
+	"user_id"	INTEGER,
+	"nom"	VARCHAR(255) NOT NULL,
+	"prenom"	VARCHAR(255) NOT NULL,
+	"login"	VARCHAR(255) NOT NULL,
+	"mot_de_passe"	VARCHAR(255) NOT NULL,
+	PRIMARY KEY("user_id" AUTOINCREMENT)
+);CREATE TABLE "Presence" (
+	"user_id"	INT NOT NULL,
+	"festival_id"	INT NOT NULL,
+	"date_aller"	DATE,
+	"date_retour"	DATE,
+	"aller"	BOOLEAN NOT NULL,
+	"retour"	BOOLEAN NOT NULL,
+	FOREIGN KEY("festival_id") REFERENCES "Festival"("festival_id"),
+	FOREIGN KEY("user_id") REFERENCES "Festivalier"("user_id")
+);CREATE TABLE "Trajet" (
+	"trajet_id"	INTEGER,
+	"user_id"	INT NOT NULL,
+	"type_vehicule"	VARCHAR(255) NOT NULL,
+	"places_disponibles"	INT NOT NULL,
+	"date_aller"	DATE NOT NULL,
+	"date_retour"	DATE,
+	"localisation"	VARCHAR(255) NOT NULL,
+	FOREIGN KEY("user_id") REFERENCES "Festivalier"("user_id"),
+	PRIMARY KEY("trajet_id" AUTOINCREMENT)
+);
