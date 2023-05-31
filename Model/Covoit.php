@@ -15,7 +15,12 @@ class Covoit {
         $this->retour = $retour;
     }
 
+    
+
     // Getters et setters
+    public function setCovoitId($covoit_id) {
+        $this->covoit_id = $covoit_id;
+    }
     public function getCovoitId() {
         return $this->covoit_id;
     }

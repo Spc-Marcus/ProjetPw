@@ -7,14 +7,16 @@ class Trajet {
     private $date_aller;
     private $date_retour;
     private $localisation;
+    private $distance;
 
-    public function __construct($user_id = null, $type_vehicule = null, $places_disponibles = null, $date_aller = null, $date_retour = null,$localisation =null) {
+    public function __construct($user_id = null, $type_vehicule = null, $places_disponibles = null, $date_aller = null, $date_retour = null,$localisation =null,$distance=null) {
         $this->user_id = $user_id;
         $this->type_vehicule = $type_vehicule;
         $this->places_disponibles = $places_disponibles;
         $this->date_aller = $date_aller;
         $this->date_retour = $date_retour;
         $this->localisation=$localisation;
+        $this->distance=$distance;
     }
     public function getTrajetId() {
         return $this->trajet_id;
@@ -69,6 +71,14 @@ class Trajet {
 
     public function setLocalisation($localisation) {
         $this->localisation = $localisation;
+    }
+
+    public function getDistance() {
+        return $this->distance;
+    }
+
+    public function setDistance($d) {
+        $this->distance = $d;
     }
 }
 

@@ -1,5 +1,5 @@
 <?php
-class Festvalier {
+class Festivalier {
     private $ID;
     private $Prenom;
     private $Nom;

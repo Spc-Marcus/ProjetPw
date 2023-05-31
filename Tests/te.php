@@ -1,18 +1,17 @@
 <?php
-require_once("TrajetDAO.php");
+require_once("../DAO/TrajetDAO.php");
 //phpinfo();
 
 $dbFile = '../DB/Donne.db';
 $pdo = new PDO('sqlite:' . $dbFile);
-$dao=new TrajetDAO();
-$dao->setConnect($pdo);
-$as=$dao->getAll("Laval");
+$dao=new TrajetDAO($pdo);
+$as=$dao->getAll("Paris");  
 
 echo "<table>";
     echo "<tr><th>loc</th></tr>";
     foreach ($as as $a) {
         echo "<tr>";
-        echo "<td>" . $a['localisation'] . "</td>";
+        echo "<td>" . $a->getLocalisation() . "</td>";
         echo "</tr>";
     }
     echo "</table>";
