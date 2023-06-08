@@ -1,0 +1,200 @@
+@mixin transition($trans...) {
+  -webkit-transition: $trans;
+  -moz-transition: $trans;
+  -ms-transition: $trans;
+  transition: $trans;
+}
+
+@mixin noselect() {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+$toggle-background: #222;
+$toggle-background-active: lighten($toggle-background, 8);
+
+.accordion {
+  color: #FFF;
+  width: 100%;
+
+  .section {
+    width: 100%;
+
+    input[type='radio'] {
+      display: none;
+
+      &:checked {
+        & + label {
+          background: $toggle-background-active;
+
+          &:before {
+            content: " ";
+            position: absolute;
+            border-left: 3px solid #21CCFC;
+            height: 100%;
+            left: 0;
+          }
+        }
+
+        & ~ .content {
+          max-height: 300px;
+          opacity: 1;
+          z-index: 10;
+          overflow-y: auto;
+        }
+      }
+    }
+
+    label {
+      position: relative;
+      cursor: pointer;
+      padding: 10px 20px;
+      display: table;
+      background: $toggle-background;
+      width: 100%;
+      @include transition(background 0.3s ease-in-out);
+      @include noselect();
+
+      &:before {
+        content: " ";
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 1px;
+        border-top: 1px solid $toggle-background-active;
+      }
+
+      &:hover {
+        background: $toggle-background-active;
+      }
+
+      span {
+        display: table-cell;
+        vertical-align: middle;
+      }
+    }
+
+    &:last-of-type {
+      border-bottom: 1px solid $toggle-background-active;
+    }
+
+    .content {
+      max-height: 0;
+      @include transition(all 0.4s);
+      opacity: 0;
+      position: relative;
+      overflow-y: hidden;
+    }
+  }
+}
+
+// Custom styles
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Quicksand:300,400,700);
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css);
+
+body {
+  background: #666;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.left-menu {
+  background: #222;
+  width: 200px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+
+.accordion {
+  font-size: 14px;
+
+  .section {
+    .content {
+      padding: 0 15px;
+    }
+
+    input[type='radio'] {
+      display: none;
+
+      &:checked {
+        & ~ .content {
+          padding: 15px;
+        }
+      }
+    }
+  }
+}
+
+ul {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  li {
+    padding: 10px;
+
+    i {
+      font-size: 13px;
+      width: 15px;
+      margin-right: 15px;
+    }
+
+    &:hover {
+      cursor: pointer;
+      i {
+        color: #21CCFC;
+      }
+    }
+  }
+}
+
+.logo {
+  padding: 30px 10px;
+  width: 200px;
+  text-align: center;
+  color: #FFF;
+  font-size: 20px;
+
+  i {
+    font-size: 70px;
+    color: #21CCFC;
+  }
+}
+
+// Media queries for responsiveness
+@media (max-width: 768px) {
+  .left-menu {
+    position: static;
+    width: 100%;
+  }
+
+  .accordion .section input[type='radio']:checked ~ .content {
+    padding: 15px;
+    max-height: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .accordion .section label {
+    padding: 10px;
+  }
+
+  .accordion .section label span {
+    display: block;
+  }
+
+  .accordion .section label:before {
+    content: none;
+  }
+}
