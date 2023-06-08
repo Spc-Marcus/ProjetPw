@@ -5,9 +5,9 @@
         <title>FestiVoiturage</title>
     </head>
     <body>
-        <?php include "../Template/menu.html"; ?>
+        
 
-
+        <h1>Contenue</h1>
 
     </body>
 </html>
