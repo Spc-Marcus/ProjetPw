@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Connexion et Enregistrement</title>
-    <link href="../Css/bootstrap.min.css" rel="stylesheet">
+    <link href="Css/bootstrap.min.css" rel="stylesheet">
     <style>
         .form-container {
             max-width: 400px;

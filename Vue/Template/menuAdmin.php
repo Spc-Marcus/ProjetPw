@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Menu Admin</title>
-  <link href="../Css/bootstrap.min.css" rel="stylesheet">
+  <link href="Css/bootstrap.min.css" rel="stylesheet">
   <style>
     .navbar-brand {
       font-weight: bold;
@@ -29,7 +29,7 @@
             <a class="nav-link" href="#">Festival</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Utilisateur</a>
+            <a class="nav-link" href="UtilisateurAdmin.php">Utilisateur</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Trajet</a>
