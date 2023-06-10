@@ -38,12 +38,12 @@ class AdminDAO {
      * @return Admin  Admin créé avec l'ID mis à jour
      */
     public function create(Admin &$admin) {
-        $query = "INSERT INTO Admin (nom, prenom, login, mot_de_passe) 
-                    VALUES (:nom, :prenom, :login, :mot_de_passe)";
+        $query = "INSERT INTO Admin (nom, prenom, email, mot_de_passe) 
+                    VALUES (:nom, :prenom, :email, :mot_de_passe)";
         $stmt = $this->connect->prepare($query);
         $stmt->bindValue(':nom', $admin->getNom());
         $stmt->bindValue(':prenom', $admin->getPrenom());
-        $stmt->bindValue(':login', $admin->getLogin());
+        $stmt->bindValue(':email', $admin->getemail());
         $stmt->bindValue(':mot_de_passe', $admin->getMotDePasse());
         $stmt->execute();
         $admin->setAdminId($this->connect->lastInsertId());
@@ -56,12 +56,12 @@ class AdminDAO {
      */
     public function update(Admin $admin) {
         $query = "UPDATE Admin 
-                    SET nom = :nom, prenom = :prenom, login = :login, mot_de_passe = :mot_de_passe 
+                    SET nom = :nom, prenom = :prenom, email = :email, mot_de_passe = :mot_de_passe 
                     WHERE admin_id = :admin_id";
         $stmt = $this->connect->prepare($query);
         $stmt->bindValue(':nom', $admin->getNom());
         $stmt->bindValue(':prenom', $admin->getPrenom());
-        $stmt->bindValue(':login', $admin->getLogin());
+        $stmt->bindValue(':email', $admin->getemail());
         $stmt->bindValue(':mot_de_passe', $admin->getMotDePasse());
         $stmt->bindValue(':admin_id', $admin->getAdminId());
         $stmt->execute();
@@ -96,7 +96,7 @@ class AdminDAO {
         $admin->setAdminId($row['admin_id']);
         $admin->setNom($row['nom']);
         $admin->setPrenom($row['prenom']);
-        $admin->setLogin($row['login']);
+        $admin->setemail($row['email']);
         $admin->setMotDePasse($row['mot_de_passe']);
         return $admin;
     }
@@ -116,7 +116,7 @@ class AdminDAO {
             $admin->setAdminId($result['admin_id']);
             $admin->setNom($result['nom']);
             $admin->setPrenom($result['prenom']);
-            $admin->setLogin($result['login']);
+            $admin->setemail($result['email']);
             $admin->setMotDePasse($result['mot_de_passe']);
             $admins[] = $admin;
         }
@@ -124,14 +124,14 @@ class AdminDAO {
     }
 
     /**
-     * Vérifie si un administrateur existe dans la base de données en utilisant le login et le mot de passe.
-     * @param $admin L'objet Admin contenant le login et le mot de passe à vérifier
+     * Vérifie si un administrateur existe dans la base de données en utilisant le email et le mot de passe.
+     * @param $admin L'objet Admin contenant le email et le mot de passe à vérifier
      * @return Admin|null Admin complet si l'administrateur existe, sinon null
      */
     public function exist(Admin $admin) {
-        $query = "SELECT * FROM Admin WHERE login = :login AND mot_de_passe = :mot_de_passe";
+        $query = "SELECT * FROM Admin WHERE email = :email AND mot_de_passe = :mot_de_passe";
         $stmt = $this->connect->prepare($query);
-        $stmt->bindValue(':login', $admin->getLogin());
+        $stmt->bindValue(':email', $admin->getemail());
         $stmt->bindValue(':mot_de_passe', $admin->getMotDePasse());
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);

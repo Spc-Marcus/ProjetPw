@@ -2,6 +2,7 @@
 class Trajet {
     private $trajet_id;
     private $user_id;
+    private $festival_id;
     private $type_vehicule;
     private $places_disponibles;
     private $date_aller;
@@ -9,8 +10,9 @@ class Trajet {
     private $localisation;
     private $distance;
 
-    public function __construct($user_id = null, $type_vehicule = null, $places_disponibles = null, $date_aller = null, $date_retour = null,$localisation =null,$distance=null) {
+    public function __construct($user_id = null,$festival_id=null, $type_vehicule = null, $places_disponibles = null, $date_aller = null, $date_retour = null,$localisation =null,$distance=null) {
         $this->user_id = $user_id;
+        $this->festival_id=$festival_id;
         $this->type_vehicule = $type_vehicule;
         $this->places_disponibles = $places_disponibles;
         $this->date_aller = $date_aller;
@@ -32,6 +34,14 @@ class Trajet {
 
     public function setUserId($user_id) {
         $this->user_id = $user_id;
+    }
+
+    public function getFestivalId() {
+        return $this->festival_id;
+    }
+
+    public function setFestivalId($id) {
+        $this->festival_id = $id;
     }
 
     public function getTypeVehicule() {

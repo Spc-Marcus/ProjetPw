@@ -2,7 +2,8 @@
 session_start();
 
 if (!isset($_SESSION['utilisateur']) || $_SESSION['utilisateur'] !== 'Admin') {
-    header("Location: ../Vue/Page/FestiVoiturage.php");
+    header("Location: ../Page/FestiVoiturage.php");
     exit;
 }
+session_destroy();
 ?>

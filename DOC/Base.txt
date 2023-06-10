@@ -2,7 +2,7 @@ CREATE TABLE "Admin" (
 	"admin_id"	INTEGER,
 	"nom"	VARCHAR(255) NOT NULL,
 	"prenom"	VARCHAR(255) NOT NULL,
-	"login"	VARCHAR(255) NOT NULL,
+	"email"	VARCHAR(255) NOT NULL,
 	"mot_de_passe"	VARCHAR(255) NOT NULL,
 	PRIMARY KEY("admin_id" AUTOINCREMENT)
 );
@@ -27,7 +27,7 @@ CREATE TABLE "Festival" (
 	"user_id"	INTEGER,
 	"nom"	VARCHAR(255) NOT NULL,
 	"prenom"	VARCHAR(255) NOT NULL,
-	"login"	VARCHAR(255) NOT NULL,
+	"email"	VARCHAR(255) NOT NULL,
 	"mot_de_passe"	VARCHAR(255) NOT NULL,
 	PRIMARY KEY("user_id" AUTOINCREMENT)
 );CREATE TABLE "Presence" (
@@ -39,14 +39,17 @@ CREATE TABLE "Festival" (
 	"retour"	BOOLEAN NOT NULL,
 	FOREIGN KEY("festival_id") REFERENCES "Festival"("festival_id"),
 	FOREIGN KEY("user_id") REFERENCES "Festivalier"("user_id")
-);CREATE TABLE "Trajet" (
+);
+CREATE TABLE "Trajet" (
 	"trajet_id"	INTEGER,
 	"user_id"	INT NOT NULL,
+	"festival_id" int NOT NULL,
 	"type_vehicule"	VARCHAR(255) NOT NULL,
 	"places_disponibles"	INT NOT NULL,
 	"date_aller"	DATE NOT NULL,
 	"date_retour"	DATE,
 	"localisation"	VARCHAR(255) NOT NULL,
+	PRIMARY KEY("trajet_id" AUTOINCREMENT),
 	FOREIGN KEY("user_id") REFERENCES "Festivalier"("user_id"),
-	PRIMARY KEY("trajet_id" AUTOINCREMENT)
+	FOREIGN KEY ("festival_id") REFERENCES "Festival"("festival_id")
 );

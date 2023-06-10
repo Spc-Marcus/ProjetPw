@@ -43,13 +43,13 @@ class FestivalierDAO {
      */
     public function create(Festivalier $festivalier) {
         // Préparer la requête SQL
-        $query = "INSERT INTO Festivalier (nom, prenom, login, mot_de_passe) VALUES (:nom, :prenom, :login, :mot_de_passe)";
+        $query = "INSERT INTO Festivalier (nom, prenom, email, mot_de_passe) VALUES (:nom, :prenom, :email, :mot_de_passe)";
         $stmt = $this->connect->prepare($query);
     
         // Liage des valeurs des paramètres
         $stmt->bindValue(':nom', $festivalier->getNom());
         $stmt->bindValue(':prenom', $festivalier->getPrenom());
-        $stmt->bindValue(':login', $festivalier->getEmail());
+        $stmt->bindValue(':email', $festivalier->getEmail());
         $stmt->bindValue(':mot_de_passe', $festivalier->getPwd());
     
         // Exécution de la requête
@@ -69,13 +69,13 @@ class FestivalierDAO {
      */
     public function update(Festivalier $festivalier) {
         // Préparer la requête SQL
-        $query = "UPDATE Festivalier SET nom = :nom, prenom = :prenom, login = :login, mot_de_passe = :mot_de_passe WHERE user_id = :user_id";
+        $query = "UPDATE Festivalier SET nom = :nom, prenom = :prenom, email = :email, mot_de_passe = :mot_de_passe WHERE user_id = :user_id";
         $stmt = $this->connect->prepare($query);
     
         // Liage des valeurs des paramètres
         $stmt->bindValue(':nom', $festivalier->getNom());
         $stmt->bindValue(':prenom', $festivalier->getPrenom());
-        $stmt->bindValue(':login', $festivalier->getEmail());
+        $stmt->bindValue(':email', $festivalier->getEmail());
         $stmt->bindValue(':mot_de_passe', $festivalier->getPwd());
         $stmt->bindValue(':user_id', $festivalier->getID());
     
@@ -127,7 +127,7 @@ class FestivalierDAO {
                 $result['user_id'],
                 $result['prenom'],
                 $result['nom'],
-                $result['login'],
+                $result['email'],
                 $result['mot_de_passe']
             );
         } else {
@@ -144,11 +144,11 @@ class FestivalierDAO {
      */
     public function exist(Festivalier $festivalier) {
         // Préparer la requête SQL
-        $query = "SELECT COUNT(*) AS count FROM Festivalier WHERE login = :login";
+        $query = "SELECT COUNT(*) AS count FROM Festivalier WHERE email = :email";
         $stmt = $this->connect->prepare($query);
     
         // Liage de la valeur du paramètre
-        $stmt->bindValue(':login', $festivalier->getEmail());
+        $stmt->bindValue(':email', $festivalier->getEmail());
     
         // Exécution de la requête
         $stmt->execute();
@@ -185,7 +185,7 @@ class FestivalierDAO {
                 $result['user_id'],
                 $result['prenom'],
                 $result['nom'],
-                $result['login'],
+                $result['email'],
                 $result['mot_de_passe']
             );
             

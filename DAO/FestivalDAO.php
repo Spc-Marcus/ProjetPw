@@ -16,12 +16,13 @@ class FestivalDAO {
      */
     public function create(Festival &$festival) {
         // Préparer la requête SQL
-        $query = "INSERT INTO Festival (nom, dates, localisation, photo) VALUES (:nom, :dates, :localisation, :photo)";
+        $query = "INSERT INTO Festival (nom, date_debut,date_fin, localisation, photo) VALUES (:nom, :date_debut,:date_fin, :localisation, :photo)";
         $stmt = $this->connect->prepare($query);
         
         // Liage des valeurs des paramètres
         $stmt->bindValue(':nom', $festival->getNom());
-        $stmt->bindValue(':dates', $festival->getDates());
+        $stmt->bindValue(':date_debut', $festival->getDate_debut());
+        $stmt->bindValue(':date_fin', $festival->getDate_fin());
         $stmt->bindValue(':localisation', $festival->getLocalisation());
         $stmt->bindValue(':photo', $festival->getPhoto());
         
@@ -39,12 +40,13 @@ class FestivalDAO {
      */
     public function update(Festival $festival) {
         // Préparer la requête SQL
-        $query = "UPDATE Festival SET nom = :nom, dates = :dates, localisation = :localisation, photo = :photo WHERE festival_id = :festival_id";
+        $query = "UPDATE Festival SET nom = :nom, date_debut = :date_debut,date_fin=:date_fin localisation = :localisation, photo = :photo WHERE festival_id = :festival_id";
         $stmt = $this->connect->prepare($query);
         
         // Liage des valeurs des paramètres
         $stmt->bindValue(':nom', $festival->getNom());
-        $stmt->bindValue(':dates', $festival->getDates());
+        $stmt->bindValue(':date_debut', $festival->getDate_debut());
+        $stmt->bindValue(':date_fin', $festival->getDate_fin());
         $stmt->bindValue(':localisation', $festival->getLocalisation());
         $stmt->bindValue(':photo', $festival->getPhoto());
         $stmt->bindValue(':festival_id', $festival->getFestivalId());
@@ -91,7 +93,8 @@ class FestivalDAO {
             // Créer et retourner un objet Festival correspondant
             return new Festival(
                 $result['nom'],
-                $result['dates'],
+                $result['date_debut'],
+                $result['date_fin'],
                 $result['localisation'],
                 $result['photo']
             );
@@ -123,7 +126,8 @@ class FestivalDAO {
         foreach ($results as $result) {
             $festival = new Festival(
                 $result['nom'],
-                $result['dates'],
+                $result['date_debut'],
+                $result['date_fin'],
                 $result['localisation'],
                 $result['photo']
             );

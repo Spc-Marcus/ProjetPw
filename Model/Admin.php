@@ -3,13 +3,13 @@ class Admin {
     private $admin_id;
     private $nom;
     private $prenom;
-    private $login;
+    private $email;
     private $mot_de_passe;
 
-    public function __construct($nom = null, $prenom = null, $login = null, $mot_de_passe = null) {
+    public function __construct($nom = null, $prenom = null, $email = null, $mot_de_passe = null) {
         $this->nom = $nom;
         $this->prenom = $prenom;
-        $this->login = $login;
+        $this->email = $email;
         $this->mot_de_passe = $mot_de_passe;
     }
     public function getAdminId() {
@@ -36,12 +36,12 @@ class Admin {
         $this->prenom = $prenom;
     }
 
-    public function getLogin() {
-        return $this->login;
+    public function getemail() {
+        return $this->email;
     }
 
-    public function setLogin($login) {
-        $this->login = $login;
+    public function setemail($email) {
+        $this->email = $email;
     }
 
     public function getMotDePasse() {

@@ -24,12 +24,13 @@ class TrajetDAO {
      */
     public function create(Trajet &$trajet) {
         // Préparer la requête SQL
-        $query = "  INSERT INTO Trajet (user_id, type_vehicule, places_disponibles, date_aller, date_retour, localisation)
-                    VALUES (:user_id, :type_vehicule, :places_disponibles, :date_aller, :date_retour, :localisation)";
+        $query = "  INSERT INTO Trajet (user_id, festival_id, type_vehicule, places_disponibles, date_aller, date_retour, localisation)
+                    VALUES (:user_id, :festival_id, :type_vehicule, :places_disponibles, :date_aller, :date_retour, :localisation)";
         $stmt = $this->connect->prepare($query);
     
         // Liage des valeurs des paramètres
         $stmt->bindValue(':user_id', $trajet->getUserId());
+        $stmt->bindValue(':festival_id', $trajet->getFestivalId());
         $stmt->bindValue(':type_vehicule', $trajet->getTypeVehicule());
         $stmt->bindValue(':places_disponibles', $trajet->getPlacesDisponibles());
         $stmt->bindValue(':date_aller', $trajet->getDateAller());
@@ -53,6 +54,7 @@ class TrajetDAO {
         // Préparer la requête SQL
         $query = "UPDATE Trajet
                     SET user_id = :user_id,
+                        festival_id = :festival_id,
                         type_vehicule = :type_vehicule,
                         places_disponibles = :places_disponibles,
                         date_aller = :date_aller,
@@ -63,6 +65,7 @@ class TrajetDAO {
     
         // Liage des valeurs des paramètres
         $stmt->bindValue(':user_id', $trajet->getUserId());
+        $stmt->bindValue(':festval_id', $trajet->getFestivalId());
         $stmt->bindValue(':type_vehicule', $trajet->getTypeVehicule());
         $stmt->bindValue(':places_disponibles', $trajet->getPlacesDisponibles());
         $stmt->bindValue(':date_aller', $trajet->getDateAller());
@@ -98,6 +101,7 @@ class TrajetDAO {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         if($result){
         return new Trajet($result['user_id'],
+        $result['festival_id'],
         $result['type_vehicule'],
         $result['places_disponibles'],
         $result['date_aller'],
@@ -160,6 +164,7 @@ class TrajetDAO {
         foreach ($results as $result) {
             $trajet = new Trajet(
                 $result['user_id'],
+                $result['festival_id'],
                 $result['type_vehicule'],
                 $result['places_disponibles'],
                 $result['date_aller'],

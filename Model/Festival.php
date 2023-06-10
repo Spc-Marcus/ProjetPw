@@ -2,13 +2,16 @@
 class Festival {
     private $festival_id;
     private $nom;
-    private $dates;
+    private $date_debut;
+
+    private $date_fin;
     private $localisation;
     private $photo;
 
-    public function __construct($nom = null, $dates = null, $localisation = null, $photo = null) {
+    public function __construct($nom = null, $date_debut = null, $date_fin =null, $localisation = null, $photo = null) {
         $this->nom = $nom;
-        $this->dates = $dates;
+        $this->date_debut = $date_debut;
+        $this->date_fin = $date_fin;
         $this->localisation = $localisation;
         $this->photo = $photo;
     }
@@ -28,14 +31,21 @@ class Festival {
         $this->nom = $nom;
     }
 
-    public function getDates() {
-        return $this->dates;
+    public function getDate_debut() {
+        return $this->date_debut;
     }
 
-    public function setDates($dates) {
-        $this->dates = $dates;
+    public function setDate_debut($date) {
+        $this->date_debut = $date;
     }
 
+    public function getDate_fin() {
+        return $this->date_fin;
+    }
+
+    public function setDate_fin($date) {
+        $this->date_fin = $date;
+    }
     public function getLocalisation() {
         return $this->localisation;
     }
