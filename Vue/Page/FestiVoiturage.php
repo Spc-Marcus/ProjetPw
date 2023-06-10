@@ -1,94 +1,112 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tableau avec modification et suppression</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Tableau Bootstrap avec style</title>
+    <link href="../Css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .table-row:hover {
-            background-color: #f5f5f5;
-            cursor: pointer;
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(0, 0, 255, 0.1); /* Couleur de fond transparente pour les lignes impaires */
         }
 
-        .edit-menu {
-            display: none;
+        .table-striped tbody tr:nth-of-type(even) {
+            background-color: rgba(0, 0, 255, 0.2); /* Couleur de fond transparente pour les lignes paires */
         }
 
-        .edit-menu.active {
+        .table-hover tbody tr:hover {
+            background-color: rgba(255, 0, 0, 0.3); /* Couleur de fond transparente pour le survol des lignes */
+        }
+
+        .edit-mode input {
+            border: 1px solid #000;
+            background-color: #5f5ff5;
+        }
+
+        .edit-mode .actions {
             display: flex;
-            gap: 5px;
-            margin-top: 5px;
+            align-items: center;
+        }
+
+        .edit-mode .save-button,
+        .edit-mode .cancel-button {
+            margin-left: 5px;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <h1>Tableau avec style Bootstrap</h1>
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th scope="col">Colonne 1</th>
-                    <th scope="col">Colonne 2</th>
-                    <th scope="col">Colonne 3</th>
-                    <th scope="col">Actions</th>
+                    <th>id</th>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Email</th>
+                    <th>Mot de passe</th>
+                    <th colspan="2">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr class="table-row">
-                    <td contenteditable="false">Donnée 1</td>
-                    <td contenteditable="true">Donnée 2</td>
-                    <td contenteditable="true">Donnée 3</td>
+                <tr>
+                    <td>1</td>
+                    <td>Foin</td>
+                    <td>Marcus</td>
+                    <td>marcusfoin1@gmail.com</td>
+                    <td>toto</td>
                     <td>
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                ...
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li class="dropdown-item edit-action">Modifier</li>
-                                <li class="dropdown-item delete-action">Supprimer</li>
-                            </ul>
-                        </div>
-                        <div class="edit-menu">
-                            <button class="btn btn-primary save-action">Enregistrer</button>
-                            <button class="btn btn-secondary cancel-action">Annuler</button>
+                        <form action="InfoAdmin.php" method="post">
+                            <input type="hidden" name="id" value="1">
+                            <button type="submit" class="btn btn-info">+ d'info</button>
+                        </form>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary edit-button">Modifier</button>
+                        <button class="btn btn-danger delete-button">Supprimer</button>
+                        <div class="actions" style="display: none;">
+                            <button class="btn btn-success save-button">Sauvegarder</button>
+                            <button class="btn btn-warning cancel-button">Annuler</button>
                         </div>
                     </td>
                 </tr>
-                <tr class="table-row">
-                    <td contenteditable="false">Donnée 4</td>
-                    <td contenteditable="true">Donnée 5</td>
-                    <td contenteditable="true">Donnée 6</td>
+                <tr>
+                    <td>2</td>
+                    <td>Baudy</td>
+                    <td>Simon</td>
+                    <td>SimonBaudy@gmail.com</td>
+                    <td>titi</td>
                     <td>
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                ...
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li class="dropdown-item edit-action">Modifier</li>
-                                <li class="dropdown-item delete-action">Supprimer</li>
-                            </ul>
-                        </div>
-                        <div class="edit-menu">
-                            <button class="btn btn-primary save-action">Enregistrer</button>
-                            <button class="btn btn-secondary cancel-action">Annuler</button>
+                        <form action="InfoAdmin.php" method="post">
+                            <input type="hidden" name="id" value="2">
+                            <button type="submit" class="btn btn-info">+ d'info</button>
+                        </form>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary edit-button">Modifier</button>
+                        <button class="btn btn-danger delete-button">Supprimer</button>
+                        <div class="actions" style="display: none;">
+                            <button class="btn btn-success save-button">Sauvegarder</button>
+                            <button class="btn btn-warning cancel-button">Annuler</button>
                         </div>
                     </td>
                 </tr>
-                <tr class="table-row">
-                    <td contenteditable="false">Donnée 7</td>
-                    <td contenteditable="true">Donnée 8</td>
-                    <td contenteditable="true">Donnée 9</td>
+                <tr>
+                    <td>3</td>
+                    <td>Thomas</td>
+                    <td>Rousseau</td>
+                    <td>Rousseau@gmail.com</td>
+                    <td>tiai</td>
                     <td>
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                ...
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li class="dropdown-item edit-action">Modifier</li>
-                                <li class="dropdown-item delete-action">Supprimer</li>
-                            </ul>
-                        </div>
-                        <div class="edit-menu">
-                            <button class="btn btn-primary save-action">Enregistrer</button>
-                            <button class="btn btn-secondary cancel-action">Annuler</button>
+                        <form action="InfoAdmin.php" method="post">
+                            <input type="hidden" name="id" value="3">
+                            <button type="submit" class="btn btn-info">+ d'info</button>
+                        </form>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary edit-button">Modifier</button>
+                        <button class="btn btn-danger delete-button">Supprimer</button>
+                        <div class="actions" style="display: none;">
+                            <button class="btn btn-success save-button">Sauvegarder</button>
+                            <button class="btn btn-warning cancel-button">Annuler</button>
                         </div>
                     </td>
                 </tr>
@@ -96,123 +114,52 @@
         </table>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        // Fonction pour gérer les actions lorsque l'option "Modifier" est sélectionnée
-        function handleEditAction(event) {
-            const row = event.target.closest('tr');
-            const editMenu = row.querySelector('.edit-menu');
-            const columns = row.querySelectorAll('td:not(:first-child)');
-            const dropdownMenu = row.querySelector('.dropdown-menu');
+            $(document).ready(function() {
+                $('.edit-button').on('click', function() {
+                    var row = $(this).closest('tr');
+                    var rowData = row.find('td:not(:first-child):not(:nth-last-child(2)):not(:last-child)');
+                        rowData.each(function() {
+                        var content = $(this).text();
+                        $(this).html('<input type="text" value="' + content + '">');
+                    });
+                    row.addClass('edit-mode');
+                    $(this).hide();
+                    row.find('.delete-button').hide();
+                    row.find('.actions').toggle();
+                });
 
-            editMenu.classList.add('active');
-            dropdownMenu.classList.remove('show');
-
-            columns.forEach((column) => {
-                column.setAttribute('contenteditable', 'true');
-            });
-        }
-
-        // Fonction pour gérer les actions lorsque l'option "Annuler" est sélectionnée
-        function handleCancelAction(event) {
-            const row = event.target.closest('tr');
-            const editMenu = row.querySelector('.edit-menu');
-            const columns = row.querySelectorAll('td:not(:first-child)');
-
-            editMenu.classList.remove('active');
-
-            columns.forEach((column) => {
-                column.setAttribute('contenteditable', 'false');
-            });
-        }
-
-        // Fonction pour gérer les actions lorsque l'option "Enregistrer" est sélectionnée
-        function handleSaveAction(event) {
-            const row = event.target.closest('tr');
-            const editMenu = row.querySelector('.edit-menu');
-            const columns = row.querySelectorAll('td:not(:first-child)');
-            const values = [];
-
-            editMenu.classList.remove('active');
-
-            columns.forEach((column) => {
-                values.push(column.textContent);
+            $(document).on('click', '.cancel-button', function() {
+                var row = $(this).closest('tr');
+                var rowData = row.find('td:not(:first-child):not(:nth-last-child(2)):not(:last-child)');
+                rowData.each(function() {
+                    var content = $(this).find('input').val();
+                    $(this).html(content);
+                });
+                row.removeClass('edit-mode');
+                row.find('.edit-button').show();
+                row.find('.delete-button').show();
+                row.find('.actions').toggle();
             });
 
-            // Appeler la fonction PHP avec les valeurs des colonnes (values)
-            // Remplacez "abc.php" par le chemin vers votre fichier PHP
-            // avec la fonction de sauvegarde appropriée
-            fetch('abc.php', {
-                method: 'POST',
-                body: JSON.stringify(values),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                // Réaliser des actions supplémentaires après la sauvegarde si nécessaire
-            })
-            .catch(error => {
-                console.error(error);
-                // Gérer les erreurs de la sauvegarde si nécessaire
+            $(document).on('click', '.save-button', function() {
+                var row = $(this).closest('tr');
+                var rowData = row.find('td:not(:first-child):not(:nth-last-child(2)):not(:last-child)');
+                rowData.each(function() {
+                    var content = $(this).find('input').val();
+                    $(this).html(content);
+                });
+                row.removeClass('edit-mode');
+                row.find('.edit-button').show();
+                row.find('.delete-button').show();
+                row.find('.actions').toggle();
             });
 
-            columns.forEach((column) => {
-                column.setAttribute('contenteditable', 'false');
+            $(document).on('click', '.delete-button', function() {
+                var row = $(this).closest('tr');
+                row.remove();
             });
-        }
-
-        // Fonction pour gérer les actions lorsque l'option "Supprimer" est sélectionnée
-        function handleDeleteAction(event) {
-            const row = event.target.closest('tr');
-            const firstColumn = row.querySelector('td:first-child');
-            const value = firstColumn.textContent;
-
-            // Appeler la fonction PHP pour supprimer les données avec la valeur de la première colonne (value)
-            // Remplacez "delete.php" par le chemin vers votre fichier PHP
-            // avec la fonction de suppression appropriée
-            fetch('delete.php', {
-                method: 'POST',
-                body: JSON.stringify({ value: value }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                // Réaliser des actions supplémentaires après la suppression si nécessaire
-            })
-            .catch(error => {
-                console.error(error);
-                // Gérer les erreurs de la suppression si nécessaire
-            });
-
-            row.remove();
-        }
-
-        // Ajouter les gestionnaires d'événements pour les actions de modification, annulation et sauvegarde
-        const editActions = document.querySelectorAll('.edit-action');
-        editActions.forEach((editAction) => {
-            editAction.addEventListener('click', handleEditAction);
-        });
-
-        const cancelActions = document.querySelectorAll('.cancel-action');
-        cancelActions.forEach((cancelAction) => {
-            cancelAction.addEventListener('click', handleCancelAction);
-        });
-
-        const saveActions = document.querySelectorAll('.save-action');
-        saveActions.forEach((saveAction) => {
-            saveAction.addEventListener('click', handleSaveAction);
-        });
-
-        // Ajouter le gestionnaire d'événement pour l'action de suppression
-        const deleteActions = document.querySelectorAll('.delete-action');
-        deleteActions.forEach((deleteAction) => {
-            deleteAction.addEventListener('click', handleDeleteAction);
         });
     </script>
 </body>
