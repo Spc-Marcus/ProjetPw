@@ -32,18 +32,20 @@
             margin-left: 5px;
         }
         h1 {
-            text-align: center; 
+            text-align: center;
+            border-top : 2px solid #5f5ff5;
             border-bottom: 2px solid #5f5ff5;
             padding: 10px 0;
         }
-        footer{
-
+        h1:first-child{
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 >Tableau des festivaliers</h1>
+
+        <h1 >Tableau des admins</h1>
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
@@ -57,23 +59,23 @@
             </thead>
             <tbody>
                 <?php
-                require_once("../DAO/FestivalierDAO.php");   
-                require_once("../Model/Festivalier.php");
+                require_once("../DAO/AdminDAO.php");   
+                require_once("../Model/Admin.php");
                 $dbFile = '../DB/Donne.db';
                 $pdo = new PDO('sqlite:' . $dbFile);
-                $dao= new FestivalierDAO($pdo);
-                $festivaliers = $dao->getAll();
-                foreach ($festivaliers as $festivalier) {
+                $dao= new AdminDAO($pdo);
+                $admins = $dao->getAll();
+                foreach ($admins as $admin) {
                     echo "<tr>";
-                    echo "<td>".$festivalier->getId()."</td>";
-                    echo "<td>".$festivalier->getNom()."</td>";
-                    echo "<td>".$festivalier->getPrenom()."</td>";
-                    echo "<td>".$festivalier->getEmail()."</td>";
-                    echo "<td>".$festivalier->getPwd()."</td>";
+                    echo "<td>".$admin->getAdminId()."</td>";
+                    echo "<td>".$admin->getNom()."</td>";
+                    echo "<td>".$admin->getPrenom()."</td>";
+                    echo "<td>".$admin->getEmail()."</td>";
+                    echo "<td>".$admin->getMotDePasse()."</td>";
                     echo"<td>
                     <form action='InfoAdmin.php' method='post'>
-                        <input type='hidden' name='id' value='".$festivalier->getId()."'>
-                        <button type='submit' class='btn btn-info'>+ d''info</button>
+                        <input type='hidden' name='id' value='".$admin->getAdminId()."'>
+                        <button type='submit' class='btn btn-info'>+ d'info</button>
                     </form>
                 </td>
                 <td>
@@ -108,8 +110,8 @@
             </thead>
             <tbody>
                 <?php
-                require_once("../DAO/AdminDAO.php");   
-                require_once("../Model/Admin.php");
+                require_once("../DAO/FestivalierDAO.php");   
+                require_once("../Model/Festivalier.php");
                 $dbFile = '../DB/Donne.db';
                 $pdo = new PDO('sqlite:' . $dbFile);
                 $dao= new FestivalierDAO($pdo);
@@ -124,7 +126,7 @@
                     echo"<td>
                     <form action='InfoAdmin.php' method='post'>
                         <input type='hidden' name='id' value='".$festivalier->getId()."'>
-                        <button type='submit' class='btn btn-info'>+ d''info</button>
+                        <button type='submit' class='btn btn-info'>+ d'info</button>
                     </form>
                 </td>
                 <td>
