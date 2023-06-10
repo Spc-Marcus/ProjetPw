@@ -1,8 +1,13 @@
+<?php 
+//session_start();
+//$nom=$_SESSION['nom'];
+//$prenom=$_SESSION['prenom'];
+?>
 <!DOCTYPE html>
 <html>
 <head>
   <title>Menu Admin</title>
-  <link href="Css/bootstrap.min.css" rel="stylesheet">
+  <link href="Css/bootstrap.css" rel="stylesheet">
   <style>
     .navbar-brand {
       font-weight: bold;
@@ -16,38 +21,40 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-      <a class="navbar-brand" href="#">Festi-Voiturage</a>
+      <a class="navbar-brand" href="PrincipalAdmin.php">Festi-Voiturage</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="#">Accueil</a>
+            <a class="nav-link" href="PrincipalAdmin.php">Accueil</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Festival</a>
+            <a class="nav-link" href="FestivalAdmin.php">Festival</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="UtilisateurAdmin.php">Utilisateur</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Trajet</a>
+            <a class="nav-link" href="TrajetAdmin.php">Trajet</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Autre
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Présent</a></li>
-              <li><a class="dropdown-item" href="#">Utilise</a></li>
+              <li><a class="dropdown-item" href="PresenceAdmin.php">Présent</a></li>
+              <li><a class="dropdown-item" href="CovoitAdmin.php">Demande</a></li>
             </ul>
           </li>
         </ul>
       </div>
       <div class="dropdown">
         <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-          Prenom, NOM
+          <?php //echo $prenom.", ".$nom;
+          echo "nom , Prenom"
+          ?>
         </button>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
           <li><a class="dropdown-item" href="#">Compte</a></li>

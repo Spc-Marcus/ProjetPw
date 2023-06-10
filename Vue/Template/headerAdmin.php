@@ -1,2 +1,2 @@
     <?php //include "../Controleur/verificationAdmin.php"; ?>
-    <?php include "Template/menuAdmin.html"; ?>
+    <?php include "Template/menuAdmin.php"; ?>

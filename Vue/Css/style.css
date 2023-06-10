@@ -1,0 +1,41 @@
+
+.edit-mode input {
+    border: 1px solid #000;
+    background-color: #5f5ff5;
+}
+
+.edit-mode .actions {
+    display: flex;
+    align-items: center;
+}
+
+.edit-mode .save-button,
+.edit-mode .cancel-button {
+    margin-left: 5px;
+}
+h1 {
+    text-align: center;
+    border-top : 2px solid #5f5ff5;
+    border-bottom: 2px solid #5f5ff5;
+    padding: 10px 0;
+}
+h1:first-child{
+    margin-top: 10px;
+}
+
+
+  body {
+    border-bottom: 15px  solid #002b36 ;
+    margin: 0;
+    padding: 0;
+  }
+
+  .floating-toast {
+    position: fixed;
+    top: 12%; /* Ajustez la valeur pour définir la position verticale */
+    left: 10%; /* Ajustez la valeur pour définir la position horizontale */
+    transform: translate(-50%, -50%); /* Centrer le toast */
+    z-index: 9999; /* Définissez une valeur de z-index élevée pour le placer au-dessus des autres éléments */
+  }
+  
+  
