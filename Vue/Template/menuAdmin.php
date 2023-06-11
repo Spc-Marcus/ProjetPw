@@ -6,7 +6,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Menu Admin</title>
   <link href="Css/bootstrap.css" rel="stylesheet">
   <style>
     .navbar-brand {

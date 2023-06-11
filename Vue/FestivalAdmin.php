@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tableau Bootstrap avec style</title>
+    <title>Festival Admin</title>
     <link href="Css/bootstrap.css" rel="stylesheet">
     <link href="Css/style.css" rel="stylesheet">
 
@@ -19,6 +19,7 @@
     </div>
     <div class="container">
         <h1>Tableau des festivals</h1>
+        
         <table class="table table-striped table-hover">
             <thead>
                 <tr>

@@ -128,7 +128,7 @@ class AdminDAO {
      * @param $admin L'objet Admin contenant le email et le mot de passe à vérifier
      * @return Admin|null Admin complet si l'administrateur existe, sinon null
      */
-    public function exist(Admin $admin) {
+    public function exist(Admin &$admin) {
         $query = "SELECT * FROM Admin WHERE email = :email AND mot_de_passe = :mot_de_passe";
         $stmt = $this->connect->prepare($query);
         $stmt->bindValue(':email', $admin->getemail());

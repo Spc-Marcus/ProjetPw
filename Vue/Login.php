@@ -88,7 +88,7 @@
                     <label for="register-radio">Enregistrement</label>
                 </div>
 
-                <form id="email-form" class="form-toggle active">
+                <form id="email-form" class="form-toggle active" action="../Controleur/connection.php" method="POST">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email:</label>
                         <input type="email" class="form-control" id="email" name="email" required>
@@ -97,12 +97,22 @@
                         <label for="mdp" class="form-label">Mot de passe:</label>
                         <input type="password" class="form-control" id="mdp" name="mdp" required>
                     </div>
+                    <?php
+                        session_start();
+                        if (isset($_SESSION['message'])) {
+                            echo "<span style='color: red;'>&#x2718;</span>" . $_SESSION['message'];
+                        }
+                        session_destroy();
+                        
+                        ?>
                     <div class="text-center">
                         <input type="submit" class="btn btn-primary" value="Se connecter">
+                        
                     </div>
+                    
                 </form>
 
-                <form id="register-form" class="form-toggle">
+                <form id="register-form" class="form-toggle" method="POST">
                     <div class="mb-3">
                         <label for="nom" class="form-label">Nom:</label>
                         <input type="text" class="form-control" id="nom" name="nom" required>

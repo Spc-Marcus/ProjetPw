@@ -137,28 +137,26 @@ class FestivalierDAO {
     }
 
     /**
-     * Vérifie si un festivalier existe déjà dans la base de données.
-     * 
-     * @param Festivalier $festivalier Objet Festivalier à vérifier.
-     * @return bool True si le festivalier existe déjà, False sinon.
+     * Vérifie si un festivalie existe dans la base de données en utilisant le email et le mot de passe.
+     * @param $festivalier L'objet festivalier contenant le email et le mot de passe à vérifier
+     * @return festivalier|null festivalier complet si l'festivalie existe, sinon null
      */
-    public function exist(Festivalier $festivalier) {
-        // Préparer la requête SQL
-        $query = "SELECT COUNT(*) AS count FROM Festivalier WHERE email = :email";
+    public function exist(Festivalier &$festivalier) {
+        $query = "SELECT * FROM Festivalier WHERE email = :email AND mot_de_passe = :mot_de_passe";
         $stmt = $this->connect->prepare($query);
-    
-        // Liage de la valeur du paramètre
-        $stmt->bindValue(':email', $festivalier->getEmail());
-    
-        // Exécution de la requête
+        $stmt->bindValue(':email', $festivalier->getemail());
+        $stmt->bindValue(':mot_de_passe', $festivalier->getPwd());
         $stmt->execute();
-        
-        // Récupération du résultat
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        // Vérifier si le festivalier existe déjà
-        return $result['count'] > 0;
+        if ($result) {
+            $festivalier->setId($result['festivalier_id']);
+            $festivalier->setNom($result['nom']);
+            $festivalier->setPrenom($result['prenom']);
+            return $festivalier;
+        }
+        return null;
     }
+
 
     /**
      * Récupère tous les festivaliers de la base de données.

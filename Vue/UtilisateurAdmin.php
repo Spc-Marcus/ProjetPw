@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tableau Bootstrap avec style</title>
+    <title>Utilisateur Admin</title>
     <link href="Css/style.css" rel="stylesheet">
     <link href="Css/bootstrap.css" rel="stylesheet">
     
