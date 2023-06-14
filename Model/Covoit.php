@@ -8,11 +8,11 @@ class Covoit {
     private $retour;
 
     public function __construct($accepter = null, $trajet_id = null, $user_id = null, $aller = null, $retour = null) {
-        $this->accepter = $accepter;
+        $this->accepter = boolval($accepter);
         $this->trajet_id = $trajet_id;
         $this->user_id = $user_id;
-        $this->aller = $aller;
-        $this->retour = $retour;
+        $this->aller = boolval($aller);
+        $this->retour = boolval($retour);
     }
 
     

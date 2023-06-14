@@ -107,15 +107,65 @@ class CovoitDAO {
         foreach ($results as $result) {
             $covoit = new Covoit();
             $covoit->setCovoitId($result['covoit_id']);
-            $covoit->setAccepter($result['accepter']);
+            $covoit->setAccepter($result['accepter']=== "true");
             $covoit->setTrajetId($result['trajet_id']);
             $covoit->setUserId($result['user_id']);
-            $covoit->setAller($result['aller']);
-            $covoit->setRetour($result['retour']);
-            $covoits[] = $covoit;
+            $covoit->setAller($result['aller']=== "true");
+            $covoit->setRetour($result['retour']=== "true");
+            $covoits[]=$covoit;
+        }
+        return $covoits;
+    }
+
+
+    public function getByDemandeurId(int $DemandeurId ) {
+        $query = "SELECT * FROM Covoit WHERE user_id = :user_id";
+        $stmt = $this->connect->prepare($query);
+        $stmt->bindValue(':user_id', $DemandeurId);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $covoits = [];
+        foreach ($results as $result) {
+            $covoit = new Covoit();
+            $covoit->setCovoitId($result['covoit_id']);
+            $covoit->setAccepter($result['accepter']=== "true");
+            $covoit->setTrajetId($result['trajet_id']);
+            $covoit->setUserId($result['user_id']);
+            $covoit->setAller($result['aller']=== "true");
+            $covoit->setRetour($result['retour']=== "true");
+            $covoits[]=$covoit;
+        }
+        return $covoits;
+    }
+    
+    public function getByConducteurId(int $ConducteurId ) {
+        $query = "SELECT *
+        FROM Covoit
+        WHERE trajet_id IN (
+            SELECT trajet_id
+            FROM Trajet
+            WHERE user_id = :user_id
+        )";
+        ;
+        $stmt = $this->connect->prepare($query);
+        $stmt->bindValue(':user_id', $ConducteurId);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $covoits = [];
+        foreach ($results as $result) {
+            $covoit = new Covoit();
+            $covoit->setCovoitId($result['covoit_id']);
+            $covoit->setAccepter($result['accepter']=== "true");
+            $covoit->setTrajetId($result['trajet_id']);
+            $covoit->setUserId($result['user_id']);
+            $covoit->setAller($result['aller']=== "true");
+            $covoit->setRetour($result['retour']=== "true");
+            $covoits[]=$covoit;
         }
         return $covoits;
     }
 }
+
+
 
 ?>

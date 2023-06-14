@@ -1,7 +1,7 @@
 <?php 
-//session_start();
-//$nom=$_SESSION['nom'];
-//$prenom=$_SESSION['prenom'];
+$user=$_SESSION['utilisateur'];
+$prenom=$user->getPrenom(  );
+$nom=$user->getNom();
 ?>
 <!DOCTYPE html>
 <html>
@@ -51,13 +51,12 @@
       </div>
       <div class="dropdown">
         <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-          <?php //echo $prenom.", ".$nom;
-          echo "nom , Prenom"
+          <?php echo $prenom.", ".$nom;
+          //echo "nom , Prenom"
           ?>
         </button>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-          <li><a class="dropdown-item" href="#">Compte</a></li>
-          <li><a class="dropdown-item" href="#">Déconnexion</a></li>
+          <li><a class="dropdown-item" href="Login.php">Déconnexion</a></li>
         </ul>
       </div>
     </div>

@@ -40,16 +40,16 @@ class FestivalDAO {
      */
     public function update(Festival $festival) {
         // Préparer la requête SQL
-        $query = "UPDATE Festival SET nom = :nom, date_debut = :date_debut,date_fin=:date_fin localisation = :localisation, photo = :photo WHERE festival_id = :festival_id";
+        $query = "UPDATE Festival SET nom = :nom, date_debut = :date_debut, date_fin = :date_fin, localisation = :localisation, photo = :photo WHERE festival_id = :festival_id";
         $stmt = $this->connect->prepare($query);
         
         // Liage des valeurs des paramètres
+        $stmt->bindValue(':festival_id', $festival->getFestivalId());
         $stmt->bindValue(':nom', $festival->getNom());
         $stmt->bindValue(':date_debut', $festival->getDate_debut());
         $stmt->bindValue(':date_fin', $festival->getDate_fin());
         $stmt->bindValue(':localisation', $festival->getLocalisation());
         $stmt->bindValue(':photo', $festival->getPhoto());
-        $stmt->bindValue(':festival_id', $festival->getFestivalId());
         $stmt->execute();
     }
 

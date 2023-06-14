@@ -149,7 +149,7 @@ class FestivalierDAO {
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($result) {
-            $festivalier->setId($result['festivalier_id']);
+            $festivalier->setId($result['user_id']);
             $festivalier->setNom($result['nom']);
             $festivalier->setPrenom($result['prenom']);
             return $festivalier;

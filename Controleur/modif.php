@@ -1,177 +1,329 @@
 <?php
-    const HTTP_OK=200;
-    const HTTP_BAD_REQUEST=400;
-    const HTTP_METHODE_NOT_ALLOWED=405;
-    const HTTP_UNAUTHORIZED=401;
-    if($_SERVER['REQUEST_METHOD']==="POST"){
+    const HTTP_OK = 200;
+    const HTTP_BAD_REQUEST = 400;
+    const HTTP_METHOD_NOT_ALLOWED = 405;
+    const HTTP_UNAUTHORIZED = 401;
+
+    if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $dbFile = '../DB/Donne.db';
         $pdo = new PDO('sqlite:' . $dbFile);
-        $origine=$_POST["origine"];
-        switch ($origine) {
+        $origine = $_POST["origine"];
 
+        switch ($origine) {
             case 'Admin':
                 require_once('../DAO/AdminDAO.php');
-                $dao=new AdminDAO($pdo);
+                $dao = new AdminDAO($pdo);
                 $action = $_POST['action'];
-            
+
                 switch ($action) {
                     case 'ajouter':
-                        // Appel la fonction d'ajout
+                        // Vérifier les valeurs nécessaires
+                        if (!isset($_POST['nom']) || !isset($_POST['prenom']) || !isset($_POST['email']) || !isset($_POST['mot de passe'])) {
+                            retour(HTTP_BAD_REQUEST, "Valeurs manquantes pour l'action d'ajout d'Admin");
+                        }
+
+                        // Appel de la fonction d'ajout
                         require_once('../Model/Admin.php');
-                        $nouveau= new Admin($_POST['nom'],$_POST['prenom'],$_POST['email'],$_POST['mot de passe']);
+                        $nouveau = new Admin($_POST['nom'], $_POST['prenom'], $_POST['email'], $_POST['mot de passe']);
                         $dao->create($nouveau);
+                        retour(HTTP_OK, "Opération effectuée avec succès");
                         break;
+
                     case 'modifier':
-                        // Appel la fonction de modification
+                        // Vérifier les valeurs nécessaires
+                        if (!isset($_POST['id']) || !isset($_POST['nom']) || !isset($_POST['prenom']) || !isset($_POST['email']) || !isset($_POST['mot de passe'])) {
+                            retour(HTTP_BAD_REQUEST, "Valeurs manquantes pour l'action de modification d'Admin");
+                        }
+
+                        // Appel de la fonction de modification
                         require_once('../Model/Admin.php');
-                        $modif= new Admin($_POST['nom'],$_POST['prenom'],$_POST['email'],$_POST['mot de passe']);
+                        $modif = new Admin($_POST['nom'], $_POST['prenom'], $_POST['email'], $_POST['mot de passe']);
                         $modif->setAdminId($_POST['id']);
-                        $dao->update($nouveau);
+                        $dao->update($modif);
+                        retour(HTTP_OK, "Opération effectuée avec succès");
                         break;
+
                     case 'supprimer':
-                        // Appel la fonction de suppression
+                        // Vérifier les valeurs nécessaires
+                        if (!isset($_POST['id'])) {
+                            retour(HTTP_BAD_REQUEST, "Valeur manquante pour l'action de suppression d'Admin");
+                        }
+
+                        // Appel de la fonction de suppression
                         $dao->delete($_POST['id']);
+                        retour(HTTP_OK, "Opération effectuée avec succès");
+                        break;
+
+                    default:
+                        retour(HTTP_BAD_REQUEST, "Action inconnue pour l'origine Admin");
                         break;
                 }
                 break;
+
             case 'Festivalier':
                 require_once('../DAO/FestivalierDAO.php');
-                $dao=new FestivalierDAO($pdo);
+                $dao = new FestivalierDAO($pdo);
                 $action = $_POST['action'];
-            
+
                 switch ($action) {
                     case 'ajouter':
-                        // Appel la fonction d'ajout
+                        // Vérifier les valeurs nécessaires
+                        if (!isset($_POST['nom']) || !isset($_POST['prenom']) || !isset($_POST['email']) || !isset($_POST['mot de passe'])) {
+                            retour(HTTP_BAD_REQUEST, "Valeurs manquantes pour l'action d'ajout de Festivalier");
+                        }
+
+                        // Appel de la fonction d'ajout
                         require_once('../Model/Festivalier.php');
-                        $nouveau= new Festivalier($_POST['nom'],$_POST['prenom'],$_POST['email'],$_POST['mot de passe']);
+                        $nouveau = new Festivalier($_POST['nom'], $_POST['prenom'], $_POST['email'], $_POST['mot de passe']);
                         $dao->create($nouveau);
+                        retour(HTTP_OK, "Opération effectuée avec succès");
                         break;
+
                     case 'modifier':
-                        // Appel la fonction de modification
+                        // Vérifier les valeurs nécessaires
+                        if (!isset($_POST['id']) || !isset($_POST['nom']) || !isset($_POST['prenom']) || !isset($_POST['email']) || !isset($_POST['mot de passe'])) {
+                            retour(HTTP_BAD_REQUEST, "Valeurs manquantes pour l'action de modification de Festivalier");
+                        }
+
+                        // Appel de la fonction de modification
                         require_once('../Model/Festivalier.php');
-                        $modif= new Festivalier($_POST['nom'],$_POST['prenom'],$_POST['email'],$_POST['mot de passe']);
+                        $modif = new Festivalier($_POST['nom'], $_POST['prenom'], $_POST['email'], $_POST['mot de passe']);
                         $modif->setID($_POST['id']);
                         $dao->update($modif);
+                        retour(HTTP_OK, "Opération effectuée avec succès");
                         break;
+
                     case 'supprimer':
-                        // Appel la fonction de suppression
+                        // Vérifier les valeurs nécessaires
+                        if (!isset($_POST['id'])) {
+                            retour(HTTP_BAD_REQUEST, "Valeur manquante pour l'action de suppression de Festivalier");
+                        }
+
+                        // Appel de la fonction de suppression
                         $dao->delete($_POST['id']);
+                        retour(HTTP_OK, "Opération effectuée avec succès");
+                        break;
+
+                    default:
+                        retour(HTTP_BAD_REQUEST, "Action inconnue pour l'origine Festivalier");
                         break;
                 }
                 break;
-                case 'Festival':
-                    require_once('../DAO/FestivalDAO.php');
-                    $dao=new FestivalDAO($pdo);
-                    $action = $_POST['action'];
-                
-                    switch ($action) {
-                        case 'ajouter':
-                            // Appel la fonction d'ajout
-                            require_once('../Model/Festival.php');
-                            $nouveau= new Festival($_POST['nom'],$_POST['date_debut'],$_POST['date_fin'],$_POST['localisation'],$_POST['photo']);
-                            $dao->create($nouveau);
-                            break;
-                        case 'modifier':
-                            // Appel la fonction de modification
-                            require_once('../Model/Festival.php');
-                            $modif= new Festival($_POST['nom'],$_POST['date_debut'],$_POST['date_fin'],$_POST['localisation'],$_POST['photo']);
-                            $modif->setFestivalId($_POST['id']);
-                            $dao->update($modif);
-                            break;
-                        case 'supprimer':
-                            // Appel la fonction de suppression
-                            $dao->delete($_POST['id']);
-                            break;
-                    }
-                    break;
+
+            case 'Festival':
+                require_once('../DAO/FestivalDAO.php');
+                $dao = new FestivalDAO($pdo);
+                $action = $_POST['action'];
+
+                switch ($action) {
+                    case 'ajouter':
+                        // Vérifier les valeurs nécessaires
+                        if (!isset($_POST['nom']) || !isset($_POST['date_debut']) || !isset($_POST['date_fin']) || !isset($_POST['localisation']) || !isset($_POST['photo'])) {
+                            retour(HTTP_BAD_REQUEST, "Valeurs manquantes pour l'action d'ajout de Festival");
+                        }
+
+                        // Appel de la fonction d'ajout
+                        require_once('../Model/Festival.php');
+                        $nouveau = new Festival($_POST['nom'], $_POST['date_debut'], $_POST['date_fin'], $_POST['localisation'], $_POST['photo']);
+                        $new=$dao->create($nouveau);
+                        retour(HTTP_OK, "Opération effectuée avec succès",$new->getFestivalId());
+                        break;
+
+                    case 'modifier':
+                        // Vérifier les valeurs nécessaires
+                        if (!isset($_POST['id']) || !isset($_POST['nom']) || !isset($_POST['date_debut']) || !isset($_POST['date_fin']) || !isset($_POST['localisation']) || !isset($_POST['photo'])) {
+                            retour(HTTP_BAD_REQUEST, "Valeurs manquantes pour l'action de modification de Festival");
+                        }
+
+                        // Appel de la fonction de modification
+                        require_once('../Model/Festival.php');
+                        $modif = new Festival($_POST['nom'], $_POST['date_debut'], $_POST['date_fin'], $_POST['localisation'], $_POST['photo']);
+                        $modif->setFestivalId($_POST['id']);
+                        $dao->update($modif);
+                        retour(HTTP_OK, "Opération effectuée avec succès",);
+                        break;
+
+                    case 'supprimer':
+                        // Vérifier les valeurs nécessaires
+                        if (!isset($_POST['id'])) {
+                            retour(HTTP_BAD_REQUEST, "Valeur manquante pour l'action de suppression de Festival");
+                        }
+
+                        // Appel de la fonction de suppression
+                        $dao->delete($_POST['id']);
+                        retour(HTTP_OK, "Opération effectuée avec succès");
+                        break;
+
+                    default:
+                        retour(HTTP_BAD_REQUEST, "Action inconnue pour l'origine Festival");
+                        break;
+                }
+                break;
+
                 case 'Covoit':
                     require_once('../DAO/CovoitDAO.php');
-                    $dao=new CovoitDAO($pdo);
+                    $dao = new CovoitDAO($pdo);
                     $action = $_POST['action'];
                 
                     switch ($action) {
                         case 'ajouter':
-                            // Appel la fonction d'ajout
+                            // Vérifier les valeurs nécessaires
+                            if (!isset($_POST['accepter']) || !isset($_POST['trajet_id']) || !isset($_POST['user_id']) || !isset($_POST['aller']) || !isset($_POST['retour'])) {
+                                retour(HTTP_BAD_REQUEST, "Valeurs manquantes pour l'action d'ajout de Covoit");
+                            }
+                
+                            // Appel de la fonction d'ajout
                             require_once('../Model/Covoit.php');
-                            $nouveau= new Covoit($_POST['accepter'],$_POST['trajet_id'],$_POST['user_id'],$_POST['aller'],$_POST['retour']);
+                            $nouveau = new Covoit($_POST['accepter'], $_POST['trajet_id'], $_POST['user_id'], $_POST['aller'], $_POST['retour']);
                             $dao->create($nouveau);
+                            retour(HTTP_OK, "Opération effectuée avec succès");
                             break;
+                
                         case 'modifier':
-                            // Appel la fonction de modification
+                            // Vérifier les valeurs nécessaires
+                            if (!isset($_POST['accepter']) || !isset($_POST['trajet_id']) || !isset($_POST['user_id']) || !isset($_POST['aller']) || !isset($_POST['retour'])) {
+                                retour(HTTP_BAD_REQUEST, "Valeurs manquantes pour l'action de modification de Covoit");
+                            }
+                
+                            // Appel de la fonction de modification
                             require_once('../Model/Covoit.php');
-                            $modif= new Covoit($_POST['accepter'],$_POST['trajet_id'],$_POST['user_id'],$_POST['aller'],$_POST['retour']);
+                            $modif = new Covoit($_POST['accepter'], $_POST['trajet_id'], $_POST['user_id'], $_POST['aller'], $_POST['retour']);
                             $modif->setCovoitId($_POST['id']);
                             $dao->update($modif);
+                            retour(HTTP_OK, "Opération effectuée avec succès");
                             break;
+                
                         case 'supprimer':
-                            // Appel la fonction de suppression
+                            // Vérifier les valeurs nécessaires
+                            if (!isset($_POST['id'])) {
+                                retour(HTTP_BAD_REQUEST, "Valeur manquante pour l'action de suppression de Covoit");
+                            }
+                
+                            // Appel de la fonction de suppression
                             $dao->delete($_POST['id']);
+                            retour(HTTP_OK, "Opération effectuée avec succès");
+                            break;
+                
+                        default:
+                            retour(HTTP_BAD_REQUEST, "Action inconnue pour l'origine Covoit");
                             break;
                     }
                     break;
+                
+
                 case 'Presence':
                     require_once('../DAO/PresenceDAO.php');
-                    $dao=new PresenceDAO($pdo);
+                    $dao = new PresenceDAO($pdo);
                     $action = $_POST['action'];
                 
                     switch ($action) {
                         case 'ajouter':
-                            // Appel la fonction d'ajout
-                            require_once('../Model/Presence.php');
-                            $nouveau= new Presence($_POST['festivalier_id'],$_POST['festival_id'],$_POST['date_aller'],$_POST['date_retour'],$_POST['aller'],$_POST['retour']);
-                            $dao->create($nouveau);
-                            break;
-                        case 'modifier':
-                            // Appel la fonction de modification
-                            require_once('../Model/Presence.php');
-                            $modif= new Presence($_POST['festivalier_id'],$_POST['festival_id'],$_POST['date_aller'],$_POST['date_retour'],$_POST['aller'],$_POST['retour']);
-                            $dao->update($modif);
-                            break;
-                        case 'supprimer':
-                            // Appel la fonction de suppression
-                            $dao->delete($_POST['festivalier_id'],$_POST['festival_id']);
-                            break;
-                    }
-                    break;
-                case 'trajet':
-                    require_once('../DAO/TrajetDAO.php');
-                    $dao=new TrajetDAO($pdo);
-                    $action = $_POST['action'];
+                            // Vérifier les valeurs nécessaires
+                            if (!isset($_POST['festivalier_id']) || !isset($_POST['festival_id']) || !isset($_POST['date_aller']) || !isset($_POST['date_retour']) || !isset($_POST['aller']) || !isset($_POST['retour'])) {
+                                retour(HTTP_BAD_REQUEST, "Valeurs manquantes pour l'action d'ajout de Presence");
+                            }
                 
-                    switch ($action) {
-                        case 'ajouter':
-                            // Appel la fonction d'ajout
-                            require_once('../Model/Trajet.php');
-                            $nouveau= new Trajet($_POST['festivalier_id'],$_POST['festival_id'],$_POST['type_vehicule'],$_POST['places_disponible'],$_POST['date_aller'],null,$_POST['festival_id']);
-                            if($_POST['date_retour'])$nouveau->setDateRetour($_POST['date_retour']);
-                            $nouveau->setTrajetId($_POST['id']);
+                            // Appel de la fonction d'ajout
+                            require_once('../Model/Presence.php');
+                            $nouveau = new Presence($_POST['festivalier_id'], $_POST['festival_id'], $_POST['date_aller'], $_POST['date_retour'], $_POST['aller'], $_POST['retour']);
                             $dao->create($nouveau);
+                            retour(HTTP_OK, "Opération effectuée avec succès");
                             break;
+                
                         case 'modifier':
-                            // Appel la fonction de modification
-                            require_once('../Model/Trajet.php');
-                            $modif= new Trajet($_POST['festivalier_id'],$_POST['festival_id'],$_POST['type_vehicule'],$_POST['places_disponible'],$_POST['date_aller'],null,$_POST['festival_id']);
-                            if($_POST['date_retour'])$modif->setDateRetour($_POST['date_retour']);
-                            $modif->setTrajetId($_POST['id']);
+                            // Vérifier les valeurs nécessaires
+                            if (!isset($_POST['festivalier_id']) || !isset($_POST['festival_id']) || !isset($_POST['date_aller']) || !isset($_POST['date_retour']) || !isset($_POST['aller']) || !isset($_POST['retour'])) {
+                                retour(HTTP_BAD_REQUEST, "Valeurs manquantes pour l'action de modification de Presence");
+                            }
+                
+                            // Appel de la fonction de modification
+                            require_once('../Model/Presence.php');
+                            $modif = new Presence($_POST['festivalier_id'], $_POST['festival_id'], $_POST['date_aller'], $_POST['date_retour'], $_POST['aller'], $_POST['retour']);
                             $dao->update($modif);
+                            retour(HTTP_OK, "Opération effectuée avec succès");
                             break;
+                
                         case 'supprimer':
-                            // Appel la fonction de suppression
-                            $dao->delete($_POST['id']);
+                            // Vérifier les valeurs nécessaires
+                            if (!isset($_POST['festivalier_id']) || !isset($_POST['festival_id'])) {
+                                retour(HTTP_BAD_REQUEST, "Valeurs manquantes pour l'action de suppression de Presence");
+                            }
+                
+                            // Appel de la fonction de suppression
+                            $dao->delete($_POST['festivalier_id'], $_POST['festival_id']);
+                            retour(HTTP_OK, "Opération effectuée avec succès");
+                            break;
+                
+                        default:
+                            retour(HTTP_BAD_REQUEST, "Action inconnue pour l'origine Presence");
                             break;
                     }
                     break;
-            }
-            $pdo=null;
-        }
+                
+                
 
-    function($code,$message){
-        header("Content-Type : application/json");
-        http_response_code($code);
-        $reponse=[
-            "code"=>$code,
-            "message"=>$message];
-        echo json_encode($reponse);
-        
+            case 'Trajet':
+                require_once('../DAO/TrajetDAO.php');
+                $dao = new TrajetDAO($pdo);
+                $action = $_POST['action'];
+
+                switch ($action) {
+                    case 'ajouter':
+                        // Vérifier les valeurs nécessaires
+                        if (!isset($_POST['covoit']) || !isset($_POST['festivalier']) || !isset($_POST['presence']) || !isset($_POST['statut']) || !isset($_POST['note'])) {
+                            retour(HTTP_BAD_REQUEST, "Valeurs manquantes pour l'action d'ajout de Trajet");
+                        }
+
+                        // Appel de la fonction d'ajout
+                        require_once('../Model/Trajet.php');
+                        $nouveau = new Trajet($_POST['covoit'], $_POST['festivalier'], $_POST['presence'], $_POST['statut'], $_POST['note']);
+                        $dao->create($nouveau);
+                        retour(HTTP_OK, "Opération effectuée avec succès");
+                        break;
+
+                    case 'modifier':
+                        // Vérifier les valeurs nécessaires
+                        if (!isset($_POST['id']) || !isset($_POST['covoit']) || !isset($_POST['festivalier']) || !isset($_POST['presence']) || !isset($_POST['statut']) || !isset($_POST['note'])) {
+                            retour(HTTP_BAD_REQUEST, "Valeurs manquantes pour l'action de modification de Trajet");
+                        }
+
+                        // Appel de la fonction de modification
+                        require_once('../Model/Trajet.php');
+                        $modif = new Trajet($_POST['covoit'], $_POST['festivalier'], $_POST['presence'], $_POST['statut'], $_POST['note']);
+                        $modif->setTrajetId($_POST['id']);
+                        $dao->update($modif);
+                        retour(HTTP_OK, "Opération effectuée avec succès");
+                        break;
+
+                    case 'supprimer':
+                        // Vérifier les valeurs nécessaires
+                        if (!isset($_POST['id'])) {
+                            retour(HTTP_BAD_REQUEST, "Valeur manquante pour l'action de suppression de Trajet");
+                        }
+
+                        // Appel de la fonction de suppression
+                        $dao->delete($_POST['id']);
+                        retour(HTTP_OK, "Opération effectuée avec succès");
+                        break;
+
+                    default:
+                        retour(HTTP_BAD_REQUEST, "Action inconnue pour l'origine Trajet");
+                        break;
+                }
+                break;
+
+            default:
+                retour(HTTP_BAD_REQUEST, "Origine inconnue");
+                break;
+        }
+    } else {
+        retour(HTTP_METHOD_NOT_ALLOWED, "Méthode non autorisée");
     }
-    ?>
+
+    function retour($code, $message,$id=null) {
+        http_response_code($code);
+        header("Content-Type: application/json");
+        echo json_encode(array("message" => $message,"id"=>$id));
+        exit;
+    }
+?>
