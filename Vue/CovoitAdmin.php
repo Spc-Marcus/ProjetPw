@@ -125,7 +125,7 @@
                 var rowData = row.find('.editable');
                 var isComplete = true;
                 var Id = row.find('td:first').text();
-                var User,Festival,Vehicule,Place,Aller,Retour,Localisation;
+                var Accepter,Trajet,User,Aller,Retour;
                 rowData.each(function(index) {
                     var input = $(this).find('input');
                     var content = input.val();
@@ -135,19 +135,15 @@
                     } else {
                         input.removeClass('incomplete');
                         if (index === 0) {
-                                User = content;
+                                Accepter = content;
                             } else if (index === 1) {
-                                Festival = content;
+                                Trajet = content;
                             } else if (index === 2) {
-                                Vehicule = content;
+                                User = content;
                             } else if (index === 3) {
-                                Place = content;
-                            } else if (index === 4) {
                                 Aller = content;
-                            }else if (index === 5) {
+                            } else if (index === 4) {
                                 Retour = content;
-                            }else if (index === 6) {
-                                Localisation = content;
                             }
                     }
                 });
@@ -168,14 +164,12 @@
                     data: {
                         action: Action,
                         id:Id,
+                        accepter:Accepter,
+                        trajet_id:Trajet,
                         user_id:User,
-                        festival_id:Festival,
-                        type_vehicule:Vehicule,
-                        places_disponibles:Place,
-                        date_aller:Aller,
-                        date_retour:Retour,
-                        localisation:Localisation,
-                        origine: "Trajet"
+                        aller:Aller,
+                        retour:Retour,
+                        origine: "Covoit"
 
                     },
                     success: function(response) {
@@ -225,7 +219,7 @@
                     data: {
                         action: "supprimer",
                         id: ID,
-                        origine: "Trajet"
+                        origine: "Covoit"
                     },
                     success: function(response) {
                         // Supprimer la ligne si nécessaire
