@@ -107,11 +107,11 @@ class CovoitDAO {
         foreach ($results as $result) {
             $covoit = new Covoit();
             $covoit->setCovoitId($result['covoit_id']);
-            $covoit->setAccepter($result['accepter']=== "true");
+            $covoit->setAccepter($result['accepter']);
             $covoit->setTrajetId($result['trajet_id']);
             $covoit->setUserId($result['user_id']);
-            $covoit->setAller($result['aller']=== "true");
-            $covoit->setRetour($result['retour']=== "true");
+            $covoit->setAller($result['aller']);
+            $covoit->setRetour($result['retour']);
             $covoits[]=$covoit;
         }
         return $covoits;
@@ -128,11 +128,11 @@ class CovoitDAO {
         foreach ($results as $result) {
             $covoit = new Covoit();
             $covoit->setCovoitId($result['covoit_id']);
-            $covoit->setAccepter($result['accepter']=== "true");
+            $covoit->setAccepter($result['accepter']);
             $covoit->setTrajetId($result['trajet_id']);
             $covoit->setUserId($result['user_id']);
-            $covoit->setAller($result['aller']=== "true");
-            $covoit->setRetour($result['retour']=== "true");
+            $covoit->setAller($result['aller']);
+            $covoit->setRetour($result['retour']);
             $covoits[]=$covoit;
         }
         return $covoits;

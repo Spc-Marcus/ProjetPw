@@ -22,7 +22,7 @@
     <div class="container">
 
         <h1 >Tableau des admins</h1>
-        <table class="table table-striped table-hover" id="admin-table">
+        <table class="table table-striped table-hover" id="Admin">
             <thead>
                 <tr>
                     <th>id</th>
@@ -76,7 +76,7 @@
 
     <div class="container">
         <h1 >Tableau des festivaliers</h1>
-        <table class="table table-striped table-hover" id="festivalier-table">
+        <table class="table table-striped table-hover" id="Festivalier">
             <thead>
                 <tr>
                     <th>id</th>
@@ -148,6 +148,10 @@
 
     $(document).on('click', '.cancel-button', function() {
         var row = $(this).closest('tr');
+        Id = row.find('td:first').text();
+        if(Id.trim()==='')row.remove();
+        
+        else{
         var rowData = row.find('.editable');
         rowData.each(function() {
             var originalValue = $(this).find('input').data('original-value'); // Récupérer la valeur d'origine à partir de l'attribut de données
@@ -157,7 +161,7 @@
         row.find('.edit-button').show();
         row.find('.delete-button').show();
         row.find('.btn-info').show();
-        row.find('.actions').toggle();
+        row.find('.actions').toggle();}
     });
 
 
@@ -165,8 +169,12 @@
         var row = $(this).closest('tr');
         var rowData = row.find('.editable');
         var isComplete = true;
+        var ID,Nom,Prenom,Email,Mdp;
+        Id = row.find('td:first').text();
+        var Origine = $(this).closest('table').attr('id');
 
-        rowData.each(function() {
+
+        rowData.each(function(index) {
             var input = $(this).find('input');
             var content = input.val();
             if (content.trim() === '') {
@@ -174,30 +182,105 @@
                 input.addClass('incomplete');
             } else {
                 input.removeClass('incomplete');
+                    if (index === 0) {
+                        Nom = content;
+                    } else if (index === 1) {
+                        Prenom = content;
+                    } else if (index === 2) {
+                        Email = content;
+                    } else if (index === 3) {
+                        Mdp = content;
+                    }
             }
         });
 
         if (isComplete) {
-            rowData.each(function() {
-                var content = $(this).find('input').val();
-                $(this).html(content);
-            });
-            row.removeClass('edit-mode');
-            row.find('.edit-button').show();
-            row.find('.delete-button').show();
-            row.find('.btn-info').show();
-            row.find('.actions').toggle();
-        } else {
-            var toast = new bootstrap.Toast($('#notification-toast')[0]);
-            toast.show();
-        }
-    });
+
+            var Action=""
+                    if (Id.trim() === '') {
+                        // La variable id est vide
+                        Action="ajouter"
+                    } else {
+                        // La variable id n'est pas vide
+                        Action="modifier"
+                    }
+
+
+            $.ajax({
+                    url: "../Controleur/modif.php",
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded",
+                    data: {
+                        action: Action,
+                        id:Id,
+                        nom:Nom,
+                        prenom:Prenom,
+                        email:Email,
+                        mdp:Mdp,
+                        origine: Origine
+
+                    },
+
+                    success: function(response) {
+                        rowData.each(function() {
+                        var content = $(this).find('input').val();
+                        $(this).html(content);
+                            });
+                            row.removeClass('edit-mode');
+                            row.find('.edit-button').show();
+                            row.find('.delete-button').show();
+                            row.find('.btn-info').show();
+                            row.find('.actions').toggle();
+                            if(Action==='ajouter') {
+                            //modifie la valeur de la 1ere colone par message.id 
+                            var idColumn = row.find('td:first');
+                            
+                            idColumn.text(response.id);
+
+                            }
+                            },
+                    error: function(response) {
+                        console.log('erreur '+response.message);
+                    },
+                    complete: function(response) {
+                        console.log("Complete");
+                    }
+                });
+
+                
+            } else {
+                var toast = new bootstrap.Toast($('#notification-toast')[0]);
+                toast.show();
+            }
+        });
 
 
 
             $(document).on('click', '.delete-button', function() {
                 var row = $(this).closest('tr');
-                row.remove();
+                var ID = row.find('td:first').text();
+                var Origine = $(this).closest('table').attr('id');
+
+                $.ajax({
+                    url: "../Controleur/modif.php",
+                    contentType: "application/x-www-form-urlencoded",
+                    type: "POST",
+                    data: {
+                        action: "supprimer",
+                        id: ID,
+                        origine: Origine
+                    },
+                    success: function(response) {
+                        // Supprimer la ligne si nécessaire
+                        row.remove();
+                    },
+                    error: function(response) {
+                        console.log("erreur");
+                    },
+                    complete: function(response) {
+                        console.log("Complete");
+                    }
+                });
             });
 
             
@@ -215,7 +298,7 @@
                     newRow.find('.save-button, .cancel-button').show();
                     newRow.find('.edit-button, .delete-button').hide();
                     newRow.find('.actions').toggle();
-                    $('#admin-table tbody').append(newRow);
+                    $('#Admin tbody').append(newRow);
         });
         $('#add-festivalier-button').on('click', function() {
                     var newRow = $('<tr></tr>');
@@ -231,7 +314,7 @@
                     newRow.find('.save-button, .cancel-button').show();
                     newRow.find('.edit-button, .delete-button').hide();
                     newRow.find('.actions').toggle();
-                    $('#festivalier-table tbody').append(newRow);
+                    $('#Festivalier tbody').append(newRow);
         });
 
         

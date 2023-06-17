@@ -14,8 +14,9 @@ class PresenceDAO {
      * @param Presence $presence L'objet Presence à insérer.
      */
     public function create(Presence $presence) {
+        var_dump($presence);
         $query = "INSERT INTO Presence (user_id, festival_id, date_aller, date_retour, aller, retour) 
-                  VALUES (:user_id, :festival_id, :date_aller, :date_retour, :aller, :retour)";
+                    VALUES (:user_id, :festival_id, :date_aller, :date_retour, :aller, :retour)";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':user_id', $presence->getUserId());
         $stmt->bindValue(':festival_id', $presence->getFestivalId());
@@ -23,6 +24,7 @@ class PresenceDAO {
         $stmt->bindValue(':date_retour', $presence->getDateRetour() ?: null);
         $stmt->bindValue(':aller', $presence->getAller());
         $stmt->bindValue(':retour', $presence->getRetour());
+        $stmt->execute();
 
     }
 
@@ -32,10 +34,9 @@ class PresenceDAO {
      * @param Presence $presence L'objet Presence à mettre à jour.
      */
     public function update(Presence $presence) {
-        $query = "  UPDATE Presence 
-                    SET date_aller = :date_aller, date_retour = :date_retour, aller = :aller, retour = :retour 
-                    WHERE user_id = :user_id AND festival_id = :festival_id";
+        $query = "UPDATE Presence SET user_id = :user_id ,festival_id = :festival_id, date_aller = :date_aller, date_retour = :date_retour, aller = :aller, retour = :retour WHERE id=:id";
         $stmt = $this->db->prepare($query);
+        $stmt -> bindValue(":id",$presence->getId());
         $stmt->bindValue(':date_aller', $presence->getDateAller() ?: null);
         $stmt->bindValue(':date_retour', $presence->getDateRetour()?: null);
         $stmt->bindValue(':aller', $presence->getAller());
@@ -51,12 +52,10 @@ class PresenceDAO {
      * @param int $festival_id L'identifiant du festival.
      * @return bool True si la suppression a réussi, false sinon.
      */
-    public function delete($user_id, $festival_id) {
-        $query = "DELETE FROM Presence WHERE user_id = :user_id AND festival_id = :festival_id";
+    public function delete($id) {
+        $query = "DELETE FROM Presence WHERE id = :id ";
         $stmt = $this->db->prepare($query);
-        $stmt->bindValue(':user_id', $user_id);
-        $stmt->bindValue(':festival_id', $festival_id);
-
+        $stmt->bindValue(':id', $id);
         return $stmt->execute();
     }
 
@@ -103,6 +102,26 @@ class PresenceDAO {
         $presences = array();
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $presence = new Presence();
+            $presence->setUserId($row['user_id']);
+            $presence->setFestivalId($row['festival_id']);
+            $presence->setDateAller($row['date_aller']);
+            $presence->setDateRetour($row['date_retour']);
+            $presence->setAller($row['aller']);
+            $presence->setRetour($row['retour']);
+
+            $presences[] = $presence;
+        }
+
+        return $presences;
+    }
+    public function getAll(){
+        $query="SELECT * FROM Presence";
+        $stmt=$this->db->prepare($query);
+        $stmt->execute();
+        $presences = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $presence = new Presence();
+            $presence->setId($row['id']);
             $presence->setUserId($row['user_id']);
             $presence->setFestivalId($row['festival_id']);
             $presence->setDateAller($row['date_aller']);

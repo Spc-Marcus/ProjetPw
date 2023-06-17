@@ -20,8 +20,8 @@ CREATE TABLE "Festival" (
 	"user_id"	INT NOT NULL,
 	"aller"	BOOLEAN NOT NULL,
 	"retour"	BOOLEAN NOT NULL,
-	FOREIGN KEY("user_id") REFERENCES "User"("user_id"),
-	FOREIGN KEY("trajet_id") REFERENCES "Trajet"("trajet_id"),
+	FOREIGN KEY("trajet_id") REFERENCES "Trajet"("trajet_id") ON DELETE CASCADE,
+	FOREIGN KEY("user_id") REFERENCES "Festivalier"("user_id") ON DELETE CASCADE,
 	PRIMARY KEY("covoit_id" AUTOINCREMENT)
 );CREATE TABLE "Festivalier" (
 	"user_id"	INTEGER,
@@ -31,25 +31,26 @@ CREATE TABLE "Festival" (
 	"mot_de_passe"	VARCHAR(255) NOT NULL,
 	PRIMARY KEY("user_id" AUTOINCREMENT)
 );CREATE TABLE "Presence" (
+	"id"	INTEGER,
 	"user_id"	INT NOT NULL,
 	"festival_id"	INT NOT NULL,
 	"date_aller"	DATE,
 	"date_retour"	DATE,
 	"aller"	BOOLEAN NOT NULL,
 	"retour"	BOOLEAN NOT NULL,
-	FOREIGN KEY("festival_id") REFERENCES "Festival"("festival_id"),
-	FOREIGN KEY("user_id") REFERENCES "Festivalier"("user_id")
-);
-CREATE TABLE "Trajet" (
+	FOREIGN KEY("festival_id") REFERENCES "Festival"("festival_id") ON DELETE CASCADE,
+	FOREIGN KEY("user_id") REFERENCES "Festivalier"("user_id") ON DELETE CASCADE,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);CREATE TABLE "Trajet" (
 	"trajet_id"	INTEGER,
 	"user_id"	INT NOT NULL,
-	"festival_id" int NOT NULL,
+	"festival_id"	int NOT NULL,
 	"type_vehicule"	VARCHAR(255) NOT NULL,
 	"places_disponibles"	INT NOT NULL,
 	"date_aller"	DATE NOT NULL,
 	"date_retour"	DATE,
 	"localisation"	VARCHAR(255) NOT NULL,
 	PRIMARY KEY("trajet_id" AUTOINCREMENT),
-	FOREIGN KEY("user_id") REFERENCES "Festivalier"("user_id"),
-	FOREIGN KEY ("festival_id") REFERENCES "Festival"("festival_id")
+	FOREIGN KEY("user_id") REFERENCES "Festivalier"("user_id") ON DELETE CASCADE,
+	FOREIGN KEY("festival_id") REFERENCES "Festival"("festival_id") ON DELETE CASCADE
 );

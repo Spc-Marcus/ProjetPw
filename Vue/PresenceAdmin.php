@@ -24,15 +24,14 @@
 
             <thead>
                 <tr>
-                    <th>id</th>
+                    <th>Id</th>
                     <th>User</th>
-                    <th>festival</th>
-                    <th>Vehicule</th>
-                    <th>Place disponible</th>
+                    <th>Festival</th>
                     <th>Date d'aller</th>
                     <th>Date de retour</th>
-                    <th>Localisation</th>
-                    <th>Actions</th>
+                    <th>Aller</th>
+                    <th>Retour</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,14 +44,13 @@
                 $presences = $dao->getAll();
                 foreach ($presences as $presence) {
                     echo "<tr>";
-                    echo "<td>" . $presence->getpresenceId() . "</td>";
+                    echo "<td>" . $presence->getId() . "</td>";
                     echo "<td class='editable number'>" . $presence->getUserId() . "</td>";
                     echo "<td class='editable number'>" . $presence->getFestivalId() . "</td>";
-                    echo "<td class='editable text'>" . $presence->getTypeVehicule() . "</td>";
-                    echo "<td class='editable number'>" . $presence->getPlacesDisponibles() . "</td>";
                     echo "<td class='editable date'>" . $presence->getDateAller() . "</td>";
                     echo "<td class='editable date'>" . $presence->getDateRetour() . "</td>";
-                    echo "<td class='editable text'>" . $presence->getLocalisation() . "</td>";
+                    echo "<td class='editable text'>" . $presence->getAller() . "</td>";
+                    echo "<td class='editable text'>" . $presence->getRetour() . "</td>";
                     echo "<td>
                             <button class='btn btn-primary edit-button'>Modifier</button>
                             <button class='btn btn-danger delete-button'>Supprimer</button>
@@ -110,71 +108,150 @@
 
             $(document).on('click', '.cancel-button', function() {
                 var row = $(this).closest('tr');
-                var rowData = row.find('.editable');
+                Id = row.find('td:first').text();
+                if(Id.trim()==='')row.remove();
+                else {var rowData = row.find('.editable');
                 rowData.each(function() {
-            var originalValue = $(this).find('input').data('original-value'); // Récupérer la valeur d'origine à partir de l'attribut de données
-            $(this).html(originalValue);
-                });
-                row.removeClass('edit-mode');
-                row.find('.edit-button').show();
-                row.find('.delete-button').show();
-                row.find('.actions').toggle();
-            });
+                var originalValue = $(this).find('input').data('original-value'); // Récupérer la valeur d'origine à partir de l'attribut de données
+                $(this).html(originalValue);
+                    });
+                    row.removeClass('edit-mode');
+                    row.find('.edit-button').show();
+                    row.find('.delete-button').show();
+                    row.find('.actions').toggle();
+                }});
 
             $(document).on('click', '.save-button', function() {
-    var row = $(this).closest('tr');
-    var rowData = row.find('.editable');
-    var isComplete = true;
-
-    rowData.each(function() {
-        var input = $(this).find('input');
-        var content = input.val();
-        if (input.attr('type') !== 'date' && content.trim() === '') {
-            isComplete = false;
-            input.addClass('incomplete');
-        } else {
-            input.removeClass('incomplete');
-        }
-    });
-
-    if (isComplete) {
-        rowData.each(function() {
-            var input = $(this).find('input');
-            var content = input.val();
-            if (input.attr('type') === 'date' && content.trim() === '') {
-                content = ''; // Définir le contenu comme vide s'il s'agit d'un champ de date et qu'il est vide
-            }
-            $(this).html(content);
-        });
-        row.removeClass('edit-mode');
-        row.find('.edit-button').show();
-        row.find('.delete-button').show();
-        row.find('.btn-info').show();
-        row.find('.actions').toggle();
-    } else {
-        var toast = new bootstrap.Toast($('#notification-toast')[0]);
-        toast.show();
-    }
-});
-
-
-            $(document).on('click', '.delete-button', function() {
                 var row = $(this).closest('tr');
-                row.remove();
-            });
+                var rowData = row.find('.editable');
+                var isComplete = true;
+                var Id, User,Festival, Date_aller, Date_retour, Aller, Retour;
 
+                // Obtenir la valeur de la colonne ID (colonne 0)
+                Id = row.find('td:first').text();
+
+                // Parcourir les autres colonnes éditables
+                rowData.each(function(index) {
+                        var input = $(this).find('input');
+                        var content = input.val();
+                        if (content.trim() === '') {
+                            isComplete = false;
+                            input.addClass('incomplete');
+                        } else {
+                            input.removeClass('incomplete');
+                            //console.log(content);
+                            if (index === 0) {
+                                User = content;
+                            } else if (index === 1) {
+                                Festival = content;
+                            } else if (index === 2) {
+                                Date_aller = content;
+                            } else if (index === 3) {
+                                Date_retour = content;
+                            } else if (index === 4) {
+                                Aller = content;
+                            } else if (index === 5) {
+                                Retour = content;
+                            }
+                        }
+                });
+                if (isComplete) {
+                    var Action=""
+                    if (Id.trim() === '') {
+                        // La variable id est vide
+                        Action="ajouter"
+                    } else {
+                        // La variable id n'est pas vide
+                        Action="modifier"
+                    }
+
+                    $.ajax({
+                    url: "../Controleur/modif.php",
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded",
+                    data: {
+                        action: Action,
+                        id:Id,
+                        festivalier_id:User,
+                        festival_id:Festival,
+                        date_aller:Date_aller,
+                        date_retour:Date_retour,
+                        aller:Aller,
+                        retour:Retour,
+                        origine: "Presence"
+
+                    },
+
+                    success: function(response) {
+                        rowData.each(function() {
+                        var content = $(this).find('input').val();
+                        $(this).html(content);
+                            });
+                            row.removeClass('edit-mode');
+                            row.find('.edit-button').show();
+                            row.find('.delete-button').show();
+                            row.find('.btn-info').show();
+                            row.find('.actions').toggle();
+                            if(Action==='ajouter') {
+                            //modifie la valeur de la 1ere colone par message.id 
+                            var idColumn = row.find('td:first');
+                            
+                            idColumn.text(response.id);
+
+                            }
+                            },
+                    error: function(response) {
+                        console.log('erreur '+response.message);
+                    },
+                    complete: function(response) {
+                        console.log("Complete");
+                    }
+                });
+
+                
+            } else {
+                var toast = new bootstrap.Toast($('#notification-toast')[0]);
+                toast.show();
+            }
+        });
+
+
+    $(document).on('click', '.delete-button', function() {
+            var row = $(this).closest('tr');
+            var ID = row.find('td:first').text();
+
+            $.ajax({
+                url: "../Controleur/modif.php",
+                contentType: "application/x-www-form-urlencoded",
+                type: "POST",
+                data: {
+                    action: "supprimer",
+                    id: ID,
+                    origine: "Presence"
+                },
+                success: function(response) {
+                    // Supprimer la ligne si nécessaire
+                    row.remove();
+                },
+                error: function(response) {
+                    console.log("erreur");
+                },
+                complete: function(response) {
+                    console.log("Complete");
+                }
+            });
+        });
                 $('#add-presence-button').on('click', function() {
                     var newRow = $('<tr></tr>');
                     newRow.addClass('edit-mode');
                     newRow.append('<td></td>');
                     newRow.append('<td class="editable"><input type="number"></td>');
                     newRow.append('<td class="editable"><input type="number"></td>');
-                    newRow.append('<td class="editable"><input type="text"></td>');
+                    newRow.append('<td class="editable"><input type="date"></td>');
+                    newRow.append('<td class="editable"><input type="date"></td>');
                     newRow.append('<td class="editable"><input type="number"></td>');
-                    newRow.append('<td class="editable"><input type="date"></td>');
-                    newRow.append('<td class="editable"><input type="date"></td>');
-                    newRow.append('<td class="editable"><input type="text"></td>');
-                    newRow.append("<td><button class='btn btn-primary edit-button'>Modifier</button><button class='btn btn-danger delete-button'>Supprimer</button><div class='actions' style='display: none;'>                                <button class='btn btn-success save-button'>Sauvegarder</button>                                <button class='btn btn-warning cancel-button'>Annuler</button>                            </div></td>");                    
+                    newRow.append('<td class="editable"><input type="number"></td>');
+                    newRow.append("<td><button class='btn btn-primary edi   t-button'>Modifier</button><button class='btn btn-danger delete-button'>Supprimer</button><div class='actions' style='display: none;'>                                <button class='btn btn-success save-button'>Sauvegarder</button>                                <button class='btn btn-warning cancel-button'>Annuler</button>                            </div></td>");                    
 
                     // Afficher les boutons "Sauvegarder" et "Annuler" et masquer les boutons "Modifier" et "Supprimer"
                     newRow.find('.save-button, .cancel-button').show();

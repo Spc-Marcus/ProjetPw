@@ -52,7 +52,9 @@ class TrajetDAO {
      */
     public function update(Trajet $trajet) {
         // Préparer la requête SQL
-        $query = "UPDATE Trajet
+        $retour=$trajet->getDateRetour();
+        if(isset($retour))
+        {$query = "UPDATE Trajet
                     SET user_id = :user_id,
                         festival_id = :festival_id,
                         type_vehicule = :type_vehicule,
@@ -60,16 +62,26 @@ class TrajetDAO {
                         date_aller = :date_aller,
                         date_retour = :date_retour,
                         localisation = :localisation
+                    WHERE trajet_id = :trajet_id";}
+        else{
+            $query = "UPDATE Trajet
+                    SET user_id = :user_id,
+                        festival_id = :festival_id,
+                        type_vehicule = :type_vehicule,
+                        places_disponibles = :places_disponibles,
+                        date_aller = :date_aller,
+                        localisation = :localisation
                     WHERE trajet_id = :trajet_id";
+        }
         $stmt = $this->connect->prepare($query);
-    
+        if(isset($retour))$stmt->bindValue(':date_retour', $trajet->getDateRetour() ?: null); 
+        
         // Liage des valeurs des paramètres
         $stmt->bindValue(':user_id', $trajet->getUserId());
         $stmt->bindValue(':festval_id', $trajet->getFestivalId());
         $stmt->bindValue(':type_vehicule', $trajet->getTypeVehicule());
         $stmt->bindValue(':places_disponibles', $trajet->getPlacesDisponibles());
         $stmt->bindValue(':date_aller', $trajet->getDateAller());
-        $stmt->bindValue(':date_retour', $trajet->getDateRetour() ?: null); 
         $stmt->bindValue(':trajet_id', $trajet->getTrajetId());
     
         // Exécution de la requête
@@ -79,14 +91,20 @@ class TrajetDAO {
 
     /**
      * Summary of delete
-     * @param int $trajet_id id a delete 
+     * @param  $trajet_id id a delete 
      */
-    public function delete(int $trajet_id) {
-        $query ="DELETE FROM Trajet where id= :id";
+    public function delete($trajet_id) {
+        $query = "DELETE FROM Trajet WHERE trajet_id = :Id";
         $stmt = $this->connect->prepare($query);
-        $stmt->bindValue(":id",$trajet_id);
+        
+        // Utilisez bindValue pour lier le paramètre :Id à la valeur $trajet_id
+        $stmt->bindValue(":Id", $trajet_id, PDO::PARAM_INT);
+        
+        // Exécutez la requête
         $stmt->execute();
     }
+
+
 
     /**
      * Summary of getById
@@ -171,7 +189,7 @@ class TrajetDAO {
                 $result['date_retour'],
                 $result['localisation']
             );
-            
+            $trajet->setTrajetId($result['trajet_id']);
             // Ajouter le trajet au tableau
             $trajets[] = $trajet;
         }

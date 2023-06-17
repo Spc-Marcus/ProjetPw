@@ -74,6 +74,7 @@
         $(document).ready(function() {
             $('.edit-button').on('click', function() {
                 var row = $(this).closest('tr');
+
                 var rowData = row.find('.editable');
 
                 var rowtext=row.find('.text')
@@ -98,6 +99,9 @@
 
             $(document).on('click', '.cancel-button', function() {
                 var row = $(this).closest('tr');
+                Id = row.find('td:first').text();
+                if(Id.trim()==='')row.remove();
+                else{
                 var rowData = row.find('.editable');
                 rowData.each(function() {
                 var originalValue = $(this).find('input').data('original-value'); // Récupérer la valeur d'origine à partir de l'attribut de données
@@ -106,7 +110,7 @@
                 row.removeClass('edit-mode');
                 row.find('.edit-button').show();
                 row.find('.delete-button').show();
-                row.find('.actions').toggle();
+                row.find('.actions').toggle();}
             });
 
 
@@ -129,7 +133,7 @@
                             input.addClass('incomplete');
                         } else {
                             input.removeClass('incomplete');
-                            console.log(content);
+                            //console.log(content);
                             if (index === 0) {
                                 Nom = content;
                             } else if (index === 1) {
@@ -179,9 +183,10 @@
                             row.find('.delete-button').show();
                             row.find('.btn-info').show();
                             row.find('.actions').toggle();
-                            if(action==='ajouter'){
+                            if(Action==='ajouter') {
                             //modifie la valeur de la 1ere colone par message.id 
                             var idColumn = row.find('td:first');
+                            
                             idColumn.text(response.id);
 
                             }
@@ -203,30 +208,30 @@
 
 
     $(document).on('click', '.delete-button', function() {
-    var row = $(this).closest('tr');
-    var ID = row.find('td:first').text();
+        var row = $(this).closest('tr');
+        var ID = row.find('td:first').text();
 
-    $.ajax({
-        url: "../Controleur/modif.php",
-        contentType: "application/x-www-form-urlencoded",
-        type: "POST",
-        data: {
-            action: "supprimer",
-            id: ID,
-            origine: "Festival"
-        },
-        success: function(response) {
-            // Supprimer la ligne si nécessaire
-            row.remove();
-        },
-        error: function(response) {
-            console.log("erreur");
-        },
-        complete: function(response) {
-            console.log("Complete");
-        }
+        $.ajax({
+            url: "../Controleur/modif.php",
+            contentType: "application/x-www-form-urlencoded",
+            type: "POST",
+            data: {
+                action: "supprimer",
+                id: ID,
+                origine: "Festival"
+            },
+            success: function(response) {
+                // Supprimer la ligne si nécessaire
+                row.remove();
+            },
+            error: function(response) {
+                console.log("erreur");
+            },
+            complete: function(response) {
+                console.log("Complete");
+            }
+        });
     });
-});
 
 
 

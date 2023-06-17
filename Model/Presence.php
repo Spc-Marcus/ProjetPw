@@ -1,5 +1,6 @@
 <?php
 class Presence {
+    private $id;
     private $user_id;
     private $festival_id;
     private $date_aller;
@@ -8,6 +9,7 @@ class Presence {
     private $retour;
 
     public function __construct($user_id = null, $festival_id = null, $date_aller = null, $date_retour = null, $aller = null, $retour = null) {
+
         $this->user_id = $user_id;
         $this->festival_id = $festival_id;
         $this->date_aller = $date_aller;
@@ -15,7 +17,13 @@ class Presence {
         $this->aller = $aller;
         $this->retour = $retour;
     }
+    public function getId() {
+        return $this->id;
+    }
 
+    public function setId($id) {
+        $this->id = $id;
+    }
     // Getters et setters
     public function getUserId() {
         return $this->user_id;
