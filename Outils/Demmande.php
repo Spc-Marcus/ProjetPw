@@ -3,8 +3,7 @@ require_once("../Model/Covoit.php");
 function enAttente($covoits) {
     $res = [];
         foreach ($covoits as $covoit) {
-            $accepter = filter_var($covoit->getAccepter(), FILTER_VALIDATE_BOOLEAN);
-            if (!$accepter) {
+            if ($covoit->getAccepter()==0) {
                 $res[] = $covoit;
             }
         }
@@ -16,7 +15,7 @@ function accepter($covoits) {
     
     if (is_array($covoits)) {
         foreach ($covoits as $covoit) {
-            if ($covoit->getAccepter()) {
+            if ($covoit->getAccepter()==1) {
                 $res[] = $covoit;
             }
         }
