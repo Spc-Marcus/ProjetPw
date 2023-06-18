@@ -30,7 +30,7 @@
                     <th>Prenom</th>
                     <th>Email</th>
                     <th>Mot de passe</th>
-                    <th colspan="2">Actions</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -49,12 +49,6 @@
                     echo "<td class='editable'>".$admin->getEmail()."</td>";
                     echo "<td class='editable'>".$admin->getMotDePasse()."</td>";
                     echo"<td>
-                    <form action='InfoAdmin.php' method='post'>
-                        <input type='hidden' name='id' value='".$admin->getAdminId()."'>
-                        <button type='submit' class='btn btn-info'>+ d'info</button>
-                    </form>
-                </td>
-                <td>
                     <button class='btn btn-primary edit-button'>Modifier</button>
                     <button class='btn btn-danger delete-button'>Supprimer</button>
                     <div class='actions' style='display: none;'>
@@ -84,7 +78,7 @@
                     <th>Prenom</th>
                     <th>Email</th>
                     <th>Mot de passe</th>
-                    <th colspan="2">Actions</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -103,12 +97,6 @@
                     echo "<td class='editable'>".$festivalier->getEmail()."</td>";
                     echo "<td class='editable'>".$festivalier->getPwd()."</td>";
                     echo"<td>
-                    <form action='InfoAdmin.php' method='post'>
-                        <input type='hidden' name='id' value='".$festivalier->getId()."'>
-                        <button type='submit' class='btn btn-info'>+ d'info</button>
-                    </form>
-                </td>
-                <td>
                     <button class='btn btn-primary edit-button'>Modifier</button>
                     <button class='btn btn-danger delete-button'>Supprimer</button>
                     <div class='actions' style='display: none;'>
@@ -136,7 +124,7 @@
         var rowData = row.find('.editable');
         rowData.each(function() {
             var content = $(this).text();
-            $(this).html('<input class="input-field" type="text" value="' + content + '">');
+            $(this).html('<input class="input-field" class="form-control" type="text" value="' + content + '">');
             $(this).find('input').data('original-value', content); // Enregistrer la valeur d'origine dans l'attribut de données
         });
         row.addClass('edit-mode');
@@ -288,10 +276,10 @@
                     var newRow = $('<tr></tr>');
                     newRow.addClass('edit-mode');
                     newRow.append('<td></td>');
-                    newRow.append('<td class="editable"><input type="text"></td>');
-                    newRow.append('<td class="editable"><input type="text"></td>');
-                    newRow.append('<td class="editable"><input type="text"></td>');
-                    newRow.append('<td class="editable"><input type="text"></td>');
+                    newRow.append('<td class="editable"><input class="form-control" type="text"></td>');
+                    newRow.append('<td class="editable"><input class="form-control" type="text"></td>');
+                    newRow.append('<td class="editable"><input class="form-control" type="text"></td>');
+                    newRow.append('<td class="editable"><input class="form-control" type="text"></td>');
                     newRow.append("<td colspan='2'><button class='btn btn-primary edit-button'>Modifier</button><button class='btn btn-danger delete-button'>Supprimer</button><div class='actions' style='display: none;'>                                <button class='btn btn-success save-button'>Sauvegarder</button>                                <button class='btn btn-warning cancel-button'>Annuler</button>                            </div></td>");                    
 
                     // Afficher les boutons "Sauvegarder" et "Annuler" et masquer les boutons "Modifier" et "Supprimer"
@@ -304,10 +292,10 @@
                     var newRow = $('<tr></tr>');
                     newRow.addClass('edit-mode');
                     newRow.append('<td></td>');
-                    newRow.append('<td class="editable"><input type="text"></td>');
-                    newRow.append('<td class="editable"><input type="text"></td>');
-                    newRow.append('<td class="editable"><input type="text"></td>');
-                    newRow.append('<td class="editable"><input type="text"></td>');
+                    newRow.append('<td class="editable"><input class="form-control" type="text"></td>');
+                    newRow.append('<td class="editable"><input class="form-control" type="text"></td>');
+                    newRow.append('<td class="editable"><input class="form-control" type="text"></td>');
+                    newRow.append('<td class="editable"><input class="form-control" type="text"></td>');
                     newRow.append("<td colspan='2'><button class='btn btn-primary edit-button'>Modifier</button><button class='btn btn-danger delete-button'>Supprimer</button><div class='actions' style='display: none;'>                                <button class='btn btn-success save-button'>Sauvegarder</button>                                <button class='btn btn-warning cancel-button'>Annuler</button>                            </div></td>");                    
 
                     // Afficher les boutons "Sauvegarder" et "Annuler" et masquer les boutons "Modifier" et "Supprimer"
