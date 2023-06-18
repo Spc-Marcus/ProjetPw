@@ -9,5 +9,9 @@ $exists = in_array($email, $userIds);
 
 // Renvoyer la réponse JSON
 $response = array('exists' => $exists);
+
+http_response_code(200);
 echo json_encode($response);
+header("Content-Type: application/json");
+exit();
 ?>

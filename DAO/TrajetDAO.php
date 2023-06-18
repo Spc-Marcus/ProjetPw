@@ -82,7 +82,6 @@ class TrajetDAO
         $stmt = $this->connect->prepare($query);
         if (isset($retour))
             $stmt->bindValue(':date_retour', $trajet->getDateRetour() ?: null);
-
         // Liage des valeurs des paramètres
         $stmt->bindValue(':user_id', $trajet->getUserId());
         $stmt->bindValue(':festval_id', $trajet->getFestivalId());
@@ -93,6 +92,7 @@ class TrajetDAO
 
         // Exécution de la requête
         $stmt->execute();
+        //var_dump($stmt);
     }
 
 

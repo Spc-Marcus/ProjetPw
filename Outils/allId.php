@@ -24,12 +24,12 @@ function getAllUserIds() {
     
     // Parcours des administrateurs et ajout de leurs identifiants au tableau
     foreach ($admins as $admin) {
-        $userIds[] = $admin->getAdminId();
+        $userIds[] = $admin->getEmail();
     }
     
     // Parcours des festivaliers et ajout de leurs identifiants au tableau
     foreach ($festivaliers as $festivalier) {
-        $userIds[] = $festivalier->getID();
+        $userIds[] = $festivalier->getEmail();
     }
     $db=null;
     // Retour du tableau d'identifiants

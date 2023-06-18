@@ -293,7 +293,7 @@
                 
                             // Définir l'ID du trajet à modifier
                             $modif->setTrajetId($_POST['id']);
-                
+                            //var_dump($modif);
                             // Appeler la méthode de mise à jour dans le DAO
                             $dao->update($modif);
                             retour(HTTP_OK, "Opération effectuée avec succès");
