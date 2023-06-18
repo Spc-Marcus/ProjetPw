@@ -83,19 +83,19 @@
                 var rowNumber=row.find('.number')
                 rowtext.each(function() {
                     var content = $(this).text();
-                    $(this).html('<input type="text" value="' + content + '">');
+                    $(this).html('<input type="text" class="form-control" value="' + content + '">');
                     $(this).find('input').data('original-value', content); // Enregistrer la valeur d'origine dans l'attribut de données
 
                 });
                 rowDate.each(function() {
                     var content = $(this).text();
-                    $(this).html('<input type="date" value="' + content + '">');
+                    $(this).html('<input type="date" class="form-control" value="' + content + '">');
                     $(this).find('input').data('original-value', content); // Enregistrer la valeur d'origine dans l'attribut de données
 
                 });
                 rowNumber.each(function() {
                     var content = $(this).text();
-                    $(this).html('<input type="number" value="' + content + '">');
+                    $(this).html('<input type="number" class="form-control" value="' + content + '">');
                     $(this).find('input').data('original-value', content); // Enregistrer la valeur d'origine dans l'attribut de données
 
                 });

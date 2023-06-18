@@ -121,13 +121,13 @@
                 var rowDate = row.find('.date')
                 rowtext.each(function () {
                     var content = $(this).text();
-                    $(this).html('<input type="text" value="' + content + '">');
+                    $(this).html('<input type="text" class="form-control" value="' + content + '">');
                     $(this).find('input').data('original-value', content); // Enregistrer la valeur d'origine dans l'attribut de données
 
                 });
                 rowDate.each(function () {
                     var content = $(this).text();
-                    $(this).html('<input type="date" value="' + content + '">');
+                    $(this).html('<input type="date" class="form-control" value="' + content + '">');
                     $(this).find('input').data('original-value', content); // Enregistrer la valeur d'origine dans l'attribut de données
 
                 });
@@ -276,16 +276,16 @@
 
 
 
-            $('#add-festival-button').on('click', function () {
-                var newRow = $('<tr></tr>');
-                newRow.addClass('edit-mode');
-                newRow.append('<td></td>');
-                newRow.append('<td class="editable text"><input type="text"></td>');
-                newRow.append('<td class="editable date"><input type="date"></td>');
-                newRow.append('<td class="editable date"><input type="date"></td>');
-                newRow.append('<td class="editable text"><input type="text"></td>');
-                newRow.append('<td class="editable text"><input type="text"></td>');
-                newRow.append("<td><button class='btn btn-primary edit-button'>Modifier</button><button class='btn btn-danger delete-button'>Supprimer</button><div class='actions' style='display: none;'>                                <button class='btn btn-success save-button'>Sauvegarder</button>                                <button class='btn btn-warning cancel-button'>Annuler</button>                            </div></td>");
+                $('#add-festival-button').on('click', function() {
+                    var newRow = $('<tr></tr>');
+                    newRow.addClass('edit-mode');
+                    newRow.append('<td></td>');
+                    newRow.append('<td class="editable text"><input class="form-control" type="text"></td>');
+                    newRow.append('<td class="editable date"><input class="form-control" type="date"></td>');
+                    newRow.append('<td class="editable date"><input class="form-control" type="date"></td>');
+                    newRow.append('<td class="editable text"><input class="form-control" type="text"></td>');
+                    newRow.append('<td class="editable text"><input class="form-control" type="text"></td>');
+                    newRow.append("<td><button class='btn btn-primary edit-button'>Modifier</button><button class='btn btn-danger delete-button'>Supprimer</button><div class='actions' style='display: none;'>                                <button class='btn btn-success save-button'>Sauvegarder</button>                                <button class='btn btn-warning cancel-button'>Annuler</button>                            </div></td>");                    
 
                 // Afficher les boutons "Sauvegarder" et "Annuler" et masquer les boutons "Modifier" et "Supprimer"
                 newRow.find('.save-button, .cancel-button').show();

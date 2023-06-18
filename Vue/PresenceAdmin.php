@@ -84,19 +84,19 @@
                 var rowNumber=row.find('.number')
                 rowtext.each(function() {
                     var content = $(this).text();
-                    $(this).html('<input type="text" value="' + content + '">');
+                    $(this).html('<input type="text" class="form-control" value="' + content + '">');
                     $(this).find('input').data('original-value', content); // Enregistrer la valeur d'origine dans l'attribut de données
 
                 });
                 rowDate.each(function() {
                     var content = $(this).text();
-                    $(this).html('<input type="date" value="' + content + '">');
+                    $(this).html('<input type="date" class="form-control" value="' + content + '">');
                     $(this).find('input').data('original-value', content); // Enregistrer la valeur d'origine dans l'attribut de données
 
                 });
                 rowNumber.each(function() {
                     var content = $(this).text();
-                    $(this).html('<input type="number" value="' + content + '">');
+                    $(this).html('<input type="number" class="form-control" value="' + content + '">');
                     $(this).find('input').data('original-value', content); // Enregistrer la valeur d'origine dans l'attribut de données
 
                 });
@@ -245,12 +245,12 @@
                     var newRow = $('<tr></tr>');
                     newRow.addClass('edit-mode');
                     newRow.append('<td></td>');
-                    newRow.append('<td class="editable"><input type="number"></td>');
-                    newRow.append('<td class="editable"><input type="number"></td>');
-                    newRow.append('<td class="editable"><input type="date"></td>');
-                    newRow.append('<td class="editable"><input type="date"></td>');
-                    newRow.append('<td class="editable"><input type="number"></td>');
-                    newRow.append('<td class="editable"><input type="number"></td>');
+                    newRow.append('<td class="editable"><input class="form-control" type="number"></td>');
+                    newRow.append('<td class="editable"><input class="form-control" type="number"></td>');
+                    newRow.append('<td class="editable"><input class="form-control" type="date"></td>');
+                    newRow.append('<td class="editable"><input class="form-control" type="date"></td>');
+                    newRow.append('<td class="editable"><input class="form-control" type="number"></td>');
+                    newRow.append('<td class="editable"><input class="form-control" type="number"></td>');
                     newRow.append("<td><button class='btn btn-primary edi   t-button'>Modifier</button><button class='btn btn-danger delete-button'>Supprimer</button><div class='actions' style='display: none;'>                                <button class='btn btn-success save-button'>Sauvegarder</button>                                <button class='btn btn-warning cancel-button'>Annuler</button>                            </div></td>");                    
 
                     // Afficher les boutons "Sauvegarder" et "Annuler" et masquer les boutons "Modifier" et "Supprimer"
