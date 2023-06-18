@@ -1,29 +1,60 @@
 <?php include "Template/headerUser.php";
-
-    function genererTableauDemandes($demandes) {
-    $tableau = '<table class="table table-striped table-hover">';
-    $tableau .= '<thead><th>Nom du festival</th><th>Proposé par</th><th>Demandé par</th><th>Aller</th><th>Retour</th><th colspan="2">action</th></thead><tbody>';
-
-    foreach ($demandes as $demande) {
-        $tableau .= '<tr>';
-        foreach ($demande as $colonne) {
-            // Effectuer des opérations spécifiques en fonction des données de la colonne
-            if ($colonne === 1) {
-                $valeur = 'Oui';
-            } elseif ($colonne === 0) {
-                $valeur = 'Non';
-            } else {
-                $valeur = $colonne;
-            }
-        
-            // Ajouter la cellule au tableau
-            $tableau .= '<td>' . $valeur . '</td>';
-        }
-        $tableau .= '</tr>';
-    }
-
-    $tableau .= '</tbody></table>';
-    return $tableau;
-}
     ?>
 
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demande</title>
+  <link href="Css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+  <div class="container">
+    <section>
+      <h1>Mes demandes</h1>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="box">
+            <h2>Boîte 1</h2>
+            <p>Contenu de la boîte 1</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="box">
+            <h2>Boîte 2</h2>
+            <p>Contenu de la boîte 2</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h1>Demande recus</h1>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="box">
+            <h2>Boîte 3</h2>
+            <p>Contenu de la boîte 3</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="box">
+            <h2>Boîte 4</h2>
+            <p>Contenu de la boîte 4</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h1>Vos trajet</h1>
+    </section>
+  </div>
+</body>
+
+</html>
