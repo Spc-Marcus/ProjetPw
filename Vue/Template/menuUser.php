@@ -69,6 +69,7 @@
         .$nom.', '.$prenom.
         '</button>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+        <li><a class="dropdown-item" href="Demande.php">Vos Demandes</a></li>
           <li><a class="dropdown-item" href="ModifCompte.php">Compte</a></li>
           <li><a class="dropdown-item" href="Login.php">Déconnexion</a></li>
         </ul>

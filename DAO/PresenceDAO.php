@@ -14,7 +14,7 @@ class PresenceDAO {
      * @param Presence $presence L'objet Presence à insérer.
      */
     public function create(Presence $presence) {
-        var_dump($presence);
+        //var_dump($presence);
         $query = "INSERT INTO Presence (user_id, festival_id, date_aller, date_retour, aller, retour,localisation) 
                     VALUES (:user_id, :festival_id, :date_aller, :date_retour, :aller, :retour, :localisation)";
         $stmt = $this->db->prepare($query);
@@ -139,6 +139,33 @@ class PresenceDAO {
 
         return $presences;
     }
-}
 
+/**
+     * Récupère toutes les présences d'un utilisateur de la base de données en utilisant son identifiant.
+     *
+     * @param int $id L'identifiant de la presence.
+     * @return Presence|null Un tableau d'objets Presence correspondant aux présences de l'utilisateur.
+     */
+    public function getById($id) {
+        $query = "SELECT * FROM Presence WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+        $result=$stmt->fetch(PDO::FETCH_ASSOC);
+        if ($result){
+
+            $presence = new Presence();
+            $presence->setId($result['id']);
+            $presence->setUserId($result['user_id']);
+            $presence->setFestivalId($result['festival_id']);
+            $presence->setDateAller($result['date_aller']);
+            $presence->setDateRetour($result['date_retour']);
+            $presence->setAller($result['aller']);
+            $presence->setRetour($result['retour']);
+            $presence->setLocalisation($result['localisation']);
+            return $presence;
+        }else{
+            return null;
+        }
+    }}
 ?>

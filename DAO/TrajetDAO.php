@@ -29,8 +29,8 @@ class TrajetDAO
     public function create(Trajet &$trajet)
     {
         // Préparer la requête SQL
-        $query = "  INSERT INTO Trajet (user_id, festival_id, type_vehicule, places_disponibles, date_aller, date_retour, localisation)
-                    VALUES (:user_id, :festival_id, :type_vehicule, :places_disponibles, :date_aller, :date_retour, :localisation)";
+        $query =  ' INSERT INTO "Trajet" ("user_id", "festival_id", "type_vehicule", "places_disponibles", "date_aller", "date_retour", "localisation")
+                    VALUES (:user_id, :festival_id, :type_vehicule, :places_disponibles, :date_aller, :date_retour, :localisation)';
         $stmt = $this->connect->prepare($query);
 
         // Liage des valeurs des paramètres
