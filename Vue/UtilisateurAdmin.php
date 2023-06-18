@@ -124,7 +124,7 @@
         var rowData = row.find('.editable');
         rowData.each(function() {
             var content = $(this).text();
-            $(this).html('<input class="input-field" class="form-control" type="text" value="' + content + '">');
+            $(this).html('<input class="form-control" type="text" value="' + content + '">');
             $(this).find('input').data('original-value', content); // Enregistrer la valeur d'origine dans l'attribut de données
         });
         row.addClass('edit-mode');
