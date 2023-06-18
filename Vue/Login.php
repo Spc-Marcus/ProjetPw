@@ -112,7 +112,7 @@
                     
                 </form>
 
-                <form id="register-form" class="form-toggle" method="POST">
+                <form id="register-form" class="form-toggle" method="POST" action="../Controleur/CreerFestivalier.php">
                     <div class="mb-3">
                         <label for="nom" class="form-label">Nom:</label>
                         <input type="text" class="form-control" id="nom" name="nom" required>

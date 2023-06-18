@@ -6,7 +6,6 @@ $mdp = $_POST['mdp'];
 
 session_start();
 if($email == '' || $mdp == ''){
-    session_start();
     $_SESSION['message'] = "Veuillez saisir un email et un mot de passe";
     header("Location: ../Vue/login.php");
     exit;

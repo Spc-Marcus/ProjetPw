@@ -8,8 +8,7 @@ class Festivalier {
     
 
     // Constructeur avec tous les paramètres
-    public function __construct($ID = null, $Prenom = null, $Nom = null, $Email = null, $Pwd = null) {
-        $this->ID = $ID;
+    public function __construct( $Prenom = null, $Nom = null, $Email = null, $Pwd = null) {
         $this->Prenom = $Prenom;
         $this->Nom = $Nom;
         $this->Email = $Email;

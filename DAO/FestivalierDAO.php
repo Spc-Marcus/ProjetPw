@@ -123,13 +123,14 @@ class FestivalierDAO {
         // Vérifier si un festivalier a été trouvé
         if ($result) {
             // Créer et retourner l'objet Festivalier correspondant
-            return new Festivalier(
-                $result['user_id'],
-                $result['prenom'],
+            $res= new Festivalier(
                 $result['nom'],
                 $result['email'],
                 $result['mot_de_passe']
             );
+            $res->setID($result['prenom']);
+            return $res;
+
         } else {
             // Aucun festivalier correspondant trouvé, retourner null
             return null;
@@ -180,13 +181,13 @@ class FestivalierDAO {
         // Parcourir les résultats et créer les objets Festivalier correspondants
         foreach ($results as $result) {
             $festivalier = new Festivalier(
-                $result['user_id'],
                 $result['prenom'],
                 $result['nom'],
                 $result['email'],
                 $result['mot_de_passe']
             );
-            
+            $festivalier->setID(
+                $result['user_id']);
             // Ajouter le festivalier au tableau
             $festivaliers[] = $festivalier;
         }
