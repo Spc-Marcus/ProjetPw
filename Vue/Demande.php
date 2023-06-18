@@ -1,6 +1,4 @@
-<?php include "Template/headerUser.php";
-    ?>
-
+<?php include "Template/headerUser.php"; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,8 +7,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Demande</title>
+  <!-- Inclure le fichier CSS de Bootstrap -->
   <link href="Css/style.css" rel="stylesheet">
-
 </head>
 
 <body>
@@ -19,42 +17,44 @@
       <h1>Mes demandes</h1>
       <div class="row">
         <div class="col-md-6">
-          <div class="box">
-            <h2>Boîte 1</h2>
-            <p>Contenu de la boîte 1</p>
+          <div class="box bg-primary text-white">
+            <h2>Mes demandes accepter</h2>
+            <p>table des demande accepter</p>
           </div>
         </div>
         <div class="col-md-6">
-          <div class="box">
-            <h2>Boîte 2</h2>
-            <p>Contenu de la boîte 2</p>
+          <div class="box bg-primary text-white">
+            <h2>Mes demandes en attente</h2>
+            <p>Table des demande en attente</p>
           </div>
         </div>
       </div>
     </section>
 
     <section>
-      <h1>Demande recus</h1>
+      <h1>Demandes reçues</h1>
       <div class="row">
         <div class="col-md-6">
-          <div class="box">
-            <h2>Boîte 3</h2>
-            <p>Contenu de la boîte 3</p>
+          <div class="box bg-primary text-white">
+            <h2>Mes demande recu accepter</h2>
+            <p>Table des demande recu accepter</p>
           </div>
         </div>
         <div class="col-md-6">
-          <div class="box">
-            <h2>Boîte 4</h2>
-            <p>Contenu de la boîte 4</p>
+          <div class="box bg-primary text-white">
+            <h2>Mes demande recu en attente</h2>
+            <p>Table des demande recu en attente</p>
           </div>
         </div>
       </div>
     </section>
 
     <section>
-      <h1>Vos trajet</h1>
+      <h1>Vos trajets</h1>
+
     </section>
   </div>
+
 </body>
 
 </html>
