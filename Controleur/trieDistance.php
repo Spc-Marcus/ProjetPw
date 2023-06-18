@@ -5,9 +5,9 @@ const HTTP_BAD_REQUEST = 400;
 const HTTP_METHOD_NOT_ALLOWED = 405;
 const HTTP_NO_CONTENT = 204;
 if ($_SERVER['REQUEST_METHOD'] === "POST"){
-    //var_dump($_POST['trajetsData']);
-    if(isset($_POST['trajetsData'])&&isset($_POST['adresse'])){
-        $trajets=$_POST['trajetsData'];
+    //var_dump($_POST['Donnes']);
+    if(isset($_POST['Donnes'])&&isset($_POST['adresse'])){
+        $Donnes=$_POST['Donnes'];
         $adresse=$_POST['adresse'];
         // Récupérer les coordonnées GPS de l'adresse de recherche
         $url = "https://nominatim.openstreetmap.org/search?q=" . urlencode($adresse) . "&format=json&email=marcusfoin2@gmail.com";
@@ -21,9 +21,9 @@ if ($_SERVER['REQUEST_METHOD'] === "POST"){
         if (!empty($data)) {
             $latitude = $data[0]['lat'];
             $longitude = $data[0]['lon'];
-            foreach ($trajets as &$trajet) {
+            foreach ($Donnes as &$Donne) {
 
-                $url = "https://nominatim.openstreetmap.org/search?q=" . urlencode($trajet['localisation']) . "&format=json&email=marcusfoin2@gmail.com";
+                $url = "https://nominatim.openstreetmap.org/search?q=" . urlencode($Donne['localisation']) . "&format=json&email=marcusfoin2@gmail.com";
                 $resCurl = curl_init($url);
                 curl_setopt($resCurl, CURLOPT_CAINFO, $absCertPath);
                 curl_setopt($resCurl, CURLOPT_RETURNTRANSFER, true); // Ajoutez cette option pour récupérer la réponse dans une variable
@@ -35,15 +35,15 @@ if ($_SERVER['REQUEST_METHOD'] === "POST"){
                     $resLatitude = $resData[0]['lat'];
                     $resLongitude = $resData[0]['lon'];
                     $distance = distance($latitude, $longitude, $resLatitude, $resLongitude);
-                    $trajet['distance']=$distance;
+                    $Donne['distance']=round($distance);
                 }else {
-                    retourTrie(HTTP_NO_CONTENT,"L'une des adresse de trajet donner ne renvoie pas de coordonner par l'Api");
+                    retourTrie(HTTP_NO_CONTENT,"L'une des adresse de Donne donner ne renvoie pas de coordonner par l'Api");
                 }
             }
-            usort($trajets, function ($a, $b) {
+            usort($Donnes, function ($a, $b) {
                 return $a['distance'] - $b['distance'];
             });
-            retourTrie(HTTP_OK,"Trie effectué avec succes",$trajets);
+            retourTrie(HTTP_OK,"Trie effectué avec succes",$Donnes);
         }
         else{
             retourTrie(HTTP_NO_CONTENT,"L'adresse donner ne renvoie pas de coordonner par l'Api");
@@ -58,10 +58,10 @@ if ($_SERVER['REQUEST_METHOD'] === "POST"){
 
 
 
-function retourTrie($code, $message,$trajets=null) {
+function retourTrie($code, $message,$Donnes=null) {
     http_response_code($code);
     header("Content-Type: application/json");
-    echo json_encode(array("message" => $message,"trajets"=>$trajets));
+    echo json_encode(array("message" => $message,"Donnes"=>$Donnes));
     exit;
 }
 ?>

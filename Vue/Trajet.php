@@ -54,11 +54,12 @@
                 <th>Nom du festival</th>
                 <th>Nom et prénom de l'utilisateur</th>
                 <th>Type de véhicule</th>
-                <th>Nombre de places restantes</th>
+                <th>Nombre de places</th>
                 <th>Date d'aller</th>
                 <th>Date de retour</th>
                 <th>Localisation de départ</th>
-                <th>Distance</th> <!-- Nouvelle colonne pour afficher la distance -->
+                <th>Distance</th> 
+                <th>Action</th> 
             </tr>
     </thead>
             <tbody>
@@ -70,7 +71,7 @@
                 $festival = $festivalDAO->getById($festivalId);
                 $festivalier = $festivalierDAO->getById($festivalierId);
                 
-                echo '<tr class="trajet-row" data-festival-id="' . $festivalId . '">';
+                echo '<tr class="trajet-row" data-festival-id="' . $festivalId . '" data-trajet-id="'.$trajet->getTrajetId().'">';
                 echo '<td>' . $festival->getNom() . '</td>';
                 echo '<td>' . $festivalier->getNom() . ' ' . $festivalier->getPrenom() . '</td>';
                 echo '<td>' . $trajet->getTypeVehicule() . '</td>';
@@ -78,7 +79,13 @@
                 echo '<td>' . $trajet->getDateAller() . '</td>';
                 echo '<td>' . $trajet->getDateRetour() . '</td>';
                 echo '<td>' . $trajet->getLocalisation() . '</td>';
-                echo '<td class="distance-cell"></td>'; // Nouvelle cellule pour afficher la distance
+                echo '<td></td>';
+                echo '<td>';
+                echo '<form action="InfoTrajet.php" method="post">';
+                echo '<input type="hidden" name="trajetId" value="' . $trajet->getTrajetId() . '">';
+                echo '<button type="submit" class="btn btn-primary">Plus d\'infos</button>';
+                echo '</form>';
+                echo '</td>';
                 echo '</tr>';
             }
             ?>
@@ -106,100 +113,109 @@
             }
         }
     }
-        $(document).ready(function() {
-    // Fonction pour construire les données des trajets
-    function buildTrajetsData() {
-        var trajetsData = [];
 
-        // Parcourir chaque ligne du tableau
-        $('.trajet-row').each(function() {
-        var festivalId = $(this).data('festival-id');
-        var festivalNom = $(this).find('td:nth-child(1)').text();
-        var festivalierNomPrenom = $(this).find('td:nth-child(2)').text();
-        var typeVehicule = $(this).find('td:nth-child(3)').text();
-        var placesDisponibles = $(this).find('td:nth-child(4)').text();
-        var dateAller = $(this).find('td:nth-child(5)').text();
-        var dateRetour = $(this).find('td:nth-child(6)').text();
-        var localisation = $(this).find('td:nth-child(7)').text();
+    $(document).ready(function() {
+        // Fonction pour construire les données des trajets
+        function buildTrajetsData() {
+            var trajetsData = [];
 
-        // Créer un objet trajet avec les données
-        var trajet = {
-            festivalId: festivalId,
-            festivalNom: festivalNom,
-            festivalierNomPrenom: festivalierNomPrenom,
-            typeVehicule: typeVehicule,
-            placesDisponibles: placesDisponibles,
-            dateAller: dateAller,
-            dateRetour: dateRetour,
-            localisation: localisation
-        };
+            // Parcourir chaque ligne du tableau
+            $('.trajet-row').each(function() {
+                var festivalId = $(this).data('festival-id');
+                var trajetId=$(this).data('trajet-id');
+                var festivalNom = $(this).find('td:nth-child(1)').text();
+                var festivalierNomPrenom = $(this).find('td:nth-child(2)').text();
+                var typeVehicule = $(this).find('td:nth-child(3)').text();
+                var placesDisponibles = $(this).find('td:nth-child(4)').text();
+                var dateAller = $(this).find('td:nth-child(5)').text();
+                var dateRetour = $(this).find('td:nth-child(6)').text();
+                var localisation = $(this).find('td:nth-child(7)').text();
 
-        // Ajouter l'objet trajet aux données des trajets
-        trajetsData.push(trajet);
-        });
+                // Créer un objet trajet avec les données
+                var trajet = {
+                    festivalId: festivalId,
+                    festivalNom: festivalNom,
+                    festivalierNomPrenom: festivalierNomPrenom,
+                    typeVehicule: typeVehicule,
+                    placesDisponibles: placesDisponibles,
+                    dateAller: dateAller,
+                    dateRetour: dateRetour,
+                    localisation: localisation,
+                    trajetId: trajetId
+                };
 
-        return trajetsData;
-    }
+                // Ajouter l'objet trajet aux données des trajets
+                trajetsData.push(trajet);
+            });
 
-    // Soumission du formulaire de recherche
-    $('#search-form').submit(function(e) {
-        e.preventDefault(); // Empêcher le rechargement de la page
-
-        var adresse = $('#adresse').val();
-        var trajetsData = buildTrajetsData();
-
-        // Requête Ajax vers trieDistance.php
-        $.ajax({
-        url: '../Controleur/trieDistance.php',
-        type: 'POST',
-        data: {
-            trajetsData: trajetsData,
-            adresse: adresse
-        },
-        success: function(response) {
-            // Traitement de la réponse
-            var datas = response.trajets;
-
-            // Reconstruction de la table avec les données triées
-            var tableBody = $('.table tbody');
-            tableBody.empty(); // Vider le contenu actuel de la table
-
-            // Parcourir les données triées
-            for (var i = 0; i < datas.length; i++) {
-            var trajet = datas[i];
-
-            // Créer une nouvelle ligne de tableau
-            var row = $('<tr>');
-            row.addClass('trajet-row');
-            row.attr('data-festival-id', trajet.festivalId);
-
-            // Ajouter les cellules à la ligne
-            row.append('<td>' + trajet.festivalNom + '</td>');
-            row.append('<td>' + trajet.festivalierNomPrenom + '</td>');
-            row.append('<td>' + trajet.typeVehicule + '</td>');
-            row.append('<td>' + trajet.placesDisponibles + '</td>');
-            row.append('<td>' + trajet.dateAller + '</td>');
-            row.append('<td>' + trajet.dateRetour + '</td>');
-            row.append('<td>' + trajet.localisation + '</td>');
-            row.append('<td>' + trajet.distance + 'km</td>');
-
-            // Ajouter la ligne à la table
-            tableBody.append(row);
-            }
-        },
-        error: function(xhr, status, error) {
-            console.log('Une erreur est survenue lors de la requête Ajax : ' + error);
+            return trajetsData;
         }
+
+        // Soumission du formulaire de recherche
+        $('#search-form').submit(function(e) {
+            e.preventDefault(); // Empêcher le rechargement de la page
+
+            var adresse = $('#adresse').val();
+            var trajetsData = buildTrajetsData();
+
+            // Requête Ajax vers trieDistance.php
+            $.ajax({
+                url: '../Controleur/trieDistance.php',
+                type: 'POST',
+                data: {
+                    Donnes: trajetsData,
+                    adresse: adresse
+                },
+                success: function(response) {
+                    // Traitement de la réponse
+                    var datas = response.Donnes;
+
+                    // Reconstruction de la table avec les données triées
+                    var tableBody = $('.table tbody');
+                    tableBody.empty(); // Vider le contenu actuel de la table
+
+                    // Parcourir les données triées
+                    for (var i = 0; i < datas.length; i++) {
+                        var trajet = datas[i];
+
+                        // Créer une nouvelle ligne de tableau
+                        var row = $('<tr>');
+                        row.addClass('trajet-row');
+                        row.attr('data-festival-id', trajet.festivalId);
+                        row.attr('data-trajet-id', trajet.trajetId);
+
+                        // Ajouter les cellules à la ligne
+                        row.append('<td>' + trajet.festivalNom + '</td>');
+                        row.append('<td>' + trajet.festivalierNomPrenom + '</td>');
+                        row.append('<td>' + trajet.typeVehicule + '</td>');
+                        row.append('<td>' + trajet.placesDisponibles + '</td>');
+                        row.append('<td>' + trajet.dateAller + '</td>');
+                        row.append('<td>' + trajet.dateRetour + '</td>');
+                        row.append('<td>' + trajet.localisation + '</td>');
+                        row.append('<td>' + trajet.distance + 'km </td>');
+                        row.append('<td>');
+                        row.append('<form action="InfoTrajet.php" method="post">');
+                        row.append('<input type="hidden" name="trajetId" value="' + trajet.trajetId + '">');
+                        row.append('<button type="submit" class="btn btn-primary">Plus d\'infos</button>');
+                        row.append('</form>');
+                        row.append('</td>');
+
+                        // Ajouter la ligne à la table
+                        tableBody.append(row);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log('Une erreur est survenue lors de la requête Ajax : ' + error);
+                }
+            });
+        });
+
+        // Affichage du festival sélectionné
+        $('#festival').change(function() {
+            var selectedFestival = $(this).find('option:selected').text();
+            $('#selected-festival').text(selectedFestival);
         });
     });
-
-    // Affichage du festival sélectionné
-    $('#festival').change(function() {
-        var selectedFestival = $(this).find('option:selected').text();
-        $('#selected-festival').text(selectedFestival);
-    });
-    });
-
 </script>
 </body>
 </html>

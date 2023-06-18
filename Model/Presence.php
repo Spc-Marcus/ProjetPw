@@ -7,8 +7,9 @@ class Presence {
     private $date_retour;
     private $aller;
     private $retour;
+    private $localisation;
 
-    public function __construct($user_id = null, $festival_id = null, $date_aller = null, $date_retour = null, $aller = null, $retour = null) {
+    public function __construct($user_id = null, $festival_id = null, $date_aller = null, $date_retour = null, $aller = null, $retour = null,$loc=null) {
 
         $this->user_id = $user_id;
         $this->festival_id = $festival_id;
@@ -16,6 +17,7 @@ class Presence {
         $this->date_retour = $date_retour;
         $this->aller = $aller;
         $this->retour = $retour;
+        $this->localisation=$loc;
     }
     public function getId() {
         return $this->id;
@@ -71,6 +73,14 @@ class Presence {
 
     public function setRetour($retour) {
         $this->retour = $retour;
+    }
+
+    public function getLocalisation() {
+        return $this->localisation;
+    }
+
+    public function setLocalisation($localisation) {
+        $this->localisation = $localisation;
     }
 }
 

@@ -67,8 +67,13 @@
                 Rejoignez dès maintenant la communauté Festi-Voiturage et découvrez une nouvelle façon de voyager vers les festivals en combinant économie, convivialité et respect de l'environnement. Ensemble, rendons chaque trajet vers un festival aussi mémorable que l'événement lui-même.
             </p>
             <p>
-                <a href="Login.php" class="btn btn-primary">Inscrivez-vous gratuitement</a>
-                <a href="Login.php" class="btn btn-secondary">Connectez-vous</a>
+                <?php
+                if(!isset($_SESSION['utilisateur'])){
+                    echo'<a href="Login.php" class="btn btn-primary">Inscrivez-vous gratuitement</a>';
+                    echo'<a href="Login.php" class="btn btn-secondary">Connectez-vous</a>';
+                }
+                ?>
+                
             </p>
         </div>
         </body>

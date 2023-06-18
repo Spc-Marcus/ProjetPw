@@ -15,8 +15,8 @@ class PresenceDAO {
      */
     public function create(Presence $presence) {
         var_dump($presence);
-        $query = "INSERT INTO Presence (user_id, festival_id, date_aller, date_retour, aller, retour) 
-                    VALUES (:user_id, :festival_id, :date_aller, :date_retour, :aller, :retour)";
+        $query = "INSERT INTO Presence (user_id, festival_id, date_aller, date_retour, aller, retour,localisation) 
+                    VALUES (:user_id, :festival_id, :date_aller, :date_retour, :aller, :retour, :localisation)";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':user_id', $presence->getUserId());
         $stmt->bindValue(':festival_id', $presence->getFestivalId());
@@ -24,6 +24,7 @@ class PresenceDAO {
         $stmt->bindValue(':date_retour', $presence->getDateRetour() ?: null);
         $stmt->bindValue(':aller', $presence->getAller());
         $stmt->bindValue(':retour', $presence->getRetour());
+        $stmt->bindValue(':localisation', $presence->getlocalisation());
         $stmt->execute();
 
     }
@@ -34,7 +35,7 @@ class PresenceDAO {
      * @param Presence $presence L'objet Presence à mettre à jour.
      */
     public function update(Presence $presence) {
-        $query = "UPDATE Presence SET user_id = :user_id ,festival_id = :festival_id, date_aller = :date_aller, date_retour = :date_retour, aller = :aller, retour = :retour WHERE id=:id";
+        $query = "UPDATE Presence SET user_id = :user_id ,festival_id = :festival_id, date_aller = :date_aller, date_retour = :date_retour, aller = :aller, retour = :retour , localisation = :localisation WHERE id=:id";
         $stmt = $this->db->prepare($query);
         $stmt -> bindValue(":id",$presence->getId());
         $stmt->bindValue(':date_aller', $presence->getDateAller() ?: null);
@@ -43,6 +44,7 @@ class PresenceDAO {
         $stmt->bindValue(':retour', $presence->getRetour());
         $stmt->bindValue(':user_id', $presence->getUserId());
         $stmt->bindValue(':festival_id', $presence->getFestivalId());
+        $stmt->bindValue(':localisation', $presence->getlocalisation());
         $stmt->execute();
     }
     /**
@@ -80,6 +82,7 @@ class PresenceDAO {
             $presence->setDateRetour($row['date_retour']);
             $presence->setAller($row['aller']);
             $presence->setRetour($row['retour']);
+            $presence->setLocalisation($row['localisation']);
 
             $presences[] = $presence;
         }
@@ -108,6 +111,7 @@ class PresenceDAO {
             $presence->setDateRetour($row['date_retour']);
             $presence->setAller($row['aller']);
             $presence->setRetour($row['retour']);
+            $presence->setLocalisation($row['localisation']);
 
             $presences[] = $presence;
         }
@@ -128,6 +132,7 @@ class PresenceDAO {
             $presence->setDateRetour($row['date_retour']);
             $presence->setAller($row['aller']);
             $presence->setRetour($row['retour']);
+            $presence->setLocalisation($row['localisation']);
 
             $presences[] = $presence;
         }
