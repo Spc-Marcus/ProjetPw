@@ -83,9 +83,10 @@
             echo '<p class="card-text"><strong>Nom du festival :</strong> ' . $festival->getNom() . '</p>';
             echo '<p class="card-text"><strong>Nom et prénom de l\'utilisateur :</strong> ' . $festivalier->getNom() .', '.$festivalier->getPrenom() .'</p>';
             echo '<p class="card-text"><strong>Type de véhicule :</strong> ' . $presence->getDateAller() . '</p>';
-            echo '<p class="card-text"><strong>Nombre de places :</strong> ' . $presence->getDateRetour() . '</p>';
-            echo '<p class="card-text"><strong>Date d\'aller :</strong> ' . $presence->getAller() . '</p>';
-            echo '<p class="card-text"><strong>Date de retour :</strong> ' . $presence->getRetour() . '</p>';
+            echo '<p class="card-text"><strong>Nombre de places à l aller:</strong> ' . $presence->getAller() . '</p>';
+            echo '<p class="card-text"><strong>Nombre de places au retour :</strong> ' . $presence->getRetour(). '</p>';
+            echo '<p class="card-text"><strong>Date d\'aller :</strong> ' . $presence->getDateAller() . '</p>';
+            echo '<p class="card-text"><strong>Date de retour :</strong> ' . $presence->getDateRetour() . '</p>';
             echo '<p class="card-text"><strong>Localisation de départ :</strong> ' . $presence->getLocalisation() . '</p>';
             echo '</div>';
 

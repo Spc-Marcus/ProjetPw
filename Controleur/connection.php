@@ -7,7 +7,7 @@ $mdp = $_POST['mdp'];
 session_start();
 if($email == '' || $mdp == ''){
     $_SESSION['message'] = "Veuillez saisir un email et un mot de passe";
-    header("Location: ../Vue/login.php");
+    header("Location: ../Vue/Login.php");
     exit;
 
 }else{
@@ -44,8 +44,8 @@ if($email == '' || $mdp == ''){
         exit;
     }    
     else{
-            $_SESSION['message'] = "Erreur de login/mot de passe";
-            header("Location: ../Vue/login.php");
+            $_SESSION['message'] = "Erreur de Login/mot de passe";
+            header("Location: ../Vue/Login.php");
             exit;
     }
 }
